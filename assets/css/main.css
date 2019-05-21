@@ -4789,3 +4789,38 @@ sub, sup {
     font-size: 12px
   }
 }
+
+.header-page-icons {
+  display: flex;
+  justify-content: center;
+  text-align: center
+}
+
+.down, .header-page-icons .icon {
+  color: #fff;
+  text-align: center
+}
+
+.header-page-icons .icon {
+  height: 20px;
+  padding: 10px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  transition: all .7s;
+  width: 20px;
+  font-size: 20px;
+  margin: 5px
+}
+
+.header-page-icons .icon:active, .header-page-icons .icon:hover {
+  color: #1a222c;
+  background: #fff
+}
+
+@media only screen and (min-width:550px) {
+  .header-page-icons .icon {
+    width: 15px;
+    height: 15px;
+    font-size: 15px
+  }
+}
