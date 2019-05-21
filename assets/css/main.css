@@ -4738,7 +4738,7 @@ sub, sup {
   display: flex;
   vertical-align: top;
   width: 100%;
-  min-height: 60vh;
+  min-height: 30vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed
@@ -4780,13 +4780,13 @@ sub, sup {
 @media only screen and (min-width:550px) {
   .page-header .site-title {
     margin: 0;
-    font-size: 18px
+    font-size: 36px
   }
 }
 
 @media only screen and (min-width:550px) {
   .page-header .site-description {
-    font-size: 12px
+    font-size: 18px
   }
 }
 
@@ -4819,8 +4819,8 @@ sub, sup {
 
 @media only screen and (min-width:550px) {
   .header-page-icons .icon {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     font-size: 15px
   }
 }
