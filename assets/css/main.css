@@ -4736,9 +4736,9 @@ sub, sup {
 #particles-new-js {
   background: #1a222c;
   display: flex;
-  vertical-align: bottom;
+  vertical-align: top;
   width: 100%;
-  min-height: 100vh;
+  min-height: 60vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed
@@ -4746,45 +4746,33 @@ sub, sup {
 
 #particles-new-js .particles-js-canvas-el {
   width: 100% !important;
-  height: 100vh !important
+  height: 40vh !important
 }
 
 .page-header {
   z-index: 1;
   text-align: left;
   color: #fff;
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: fixed;
+  top: 10%;
+  left: 10%;
   margin: 0 auto;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%)
 }
 
 .page-header .site-title {
-  font-size: 50px;
+  font-size: 18px;
   display: block;
   line-height: 1;
   color: #fff
 }
 
-@media only screen and (min-width:550px) {
-  .page-header .site-title {
-    margin: 0;
-    font-size: 100px
-  }
-}
 
 .page-header .site-description {
-  font-size: 20px;
+  font-size: 12px;
   display: block;
   line-height: 1;
   color: #fff;
   margin-top: 10px
-}
-
-@media only screen and (min-width:550px) {
-  .page-header .site-description {
-    font-size: 40px
-  }
 }
