@@ -40,20 +40,30 @@ $$ \widetilde{\beta_i} = \frac{X_i'Y}{N} $$
 Before moving forward we need to make a few more assumptions, or rather give our variables some prior distributions.  Specifically we let $$ \beta \sim N(0,h^2/M) $$. The variance is logical, as the greater the heritability of the trait the larger the possibility of getting large impact variants.  Similarly, the greater number of variants the better our estimates can get (similar to the error of the mean).  Since $$\beta$$ is normally distributed, so is $$\widetilde{\beta}$$.  We can find the parameters of this normal distribution as follows:
 
 $$ \widetilde{\beta_i} = (X'X)^{-1}X'Y $$
+
 $$ E[\widetilde{\beta_i}] = (X'X)^{-1}X'E[Y] $$
+
 $$ E[\widetilde{\beta_i}] = (X'X)^{-1}X'X\beta_i $$
+
 $$ E[\widetilde{\beta_i}] = \beta_i $$
 
 $$ Var(y) = Var(X\beta + \epsilon) $$
+
 $$ Var(y) = Var(\epsilon) = 1 - \frac{h^2}{M}
+
 $$ Var(\widetilde{\beta_i}) = Var((X'X)^{-1}X'Y) $$
+
 $$ Var(\widetilde{\beta_i}) = (X'X)^{-1}X'Var(Y)X(X'X)^{-1} $$
+
 $$ Var(\widetilde{\beta_i}) = (N)^{-2}X_i'Var(Y)X_i $$
+
 $$ Var(\widetilde{\beta_i}) = (N)^{-2}X_i'(1 - \frac{h^2}{M})X_i $$
+
 $$ Var(\widetilde{\beta_i}) = (N)^{-2}X_i'X_i(1 - \frac{h^2}{M}) $$
+
 $$ Var(\widetilde{\beta_i}) = \frac{1-h^2}{M}N $$
 
-The mor confusing process is the variance, in which we first need to calculate out the variance of y.  For some reason in this case we treat beta as a fixed effect leaving us with the variance of epsilon.  Epsilon is the error term, which accounts for the sum of total variance in the phenotype not accounted by the genotypes.  Therefore it is simply one minus the per SNP heritabiliy (per SNP because this is the variance per variant).  
+The more confusing process is the variance, in which we first need to calculate out the variance of y.  For some reason in this case we treat beta as a fixed effect leaving us with the variance of epsilon.  Epsilon is the error term, which accounts for the sum of total variance in the phenotype not accounted by the genotypes.  Therefore it is simply one minus the per SNP heritabiliy (per SNP because this is the variance per variant). Note that I got much of this process from [Ruppert](https://www.cambridge.org/core/books/semiparametric-regression/02FC9A9435232CA67532B4D31874412C), specifically on page 30 in Chapter 2.
 
 Putting both pieces together our final distribution is:
 
@@ -62,5 +72,7 @@ $$ \widetilde{\beta_i} \sim N(\beta_i,\frac{1-\frac{h^2}{M}}{N}) $$
 ### Calculate Posterior Beta
 
 Now that we have fully defined the estimated beta, we can use this value to work back and get the posterior distribution of beta itself.  While the paper points to [Dudbridge](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1003348), which points to [Ruppert](https://www.cambridge.org/core/books/semiparametric-regression/02FC9A9435232CA67532B4D31874412C), there is no satisfactory explanation for the seemingly nice result that is achieved.  The work by Dudbrdige would indicate that some BLUP style calculations are needed, but rather this is simply a direct application of Bayes Law:
+
+$$ (\beta | \widetilde{\beta}) = \frac{(\widetilde{\beta} | \beta)(\beta)}{\widetilde{\beta}} $$
 
 $$ (\beta | \widetilde{\beta}) = \frac{(\widetilde{\beta} | \beta)(\beta)}{\widetilde{\beta}} $$
