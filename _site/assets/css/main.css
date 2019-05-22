@@ -4825,5 +4825,13 @@ sub, sup {
 }
 
 .forMarkdown {
-  text-align: center;
-}
+     margin: auto;
+     text-align: center;
+     outline: medium none;
+     padding: 0;
+     position: relative;
+     color: #000000;
+     font-family: Arial,Helvetica,sans-serif;
+     font-size: 12px;
+     line-height: 18px;
+ }
