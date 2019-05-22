@@ -4818,12 +4818,8 @@ sub, sup {
   vertical-align: top;
   width: 100%;
   min-height: 50vh;
+  height: 50vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed
-}
-
-.shortParticle #particles-js .particles-js-canvas-el {
-  width: 100% !important;
-  height: 50vh !important
 }
