@@ -4819,7 +4819,7 @@ sub, sup {
   background-attachment: fixed
 }
 
-#particles-page-js .particles-js-canvas-el {
+#particles-page-js .particles-page-js-canvas-el {
   width: 100% !important;
   height: 100vh !important
 }
