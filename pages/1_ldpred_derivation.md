@@ -75,12 +75,12 @@ Now that we have fully defined the estimated beta, we can use this value to work
 
 $$ (\beta | \tilde{\beta}) = \frac{(\tilde{\beta} | \beta)(\beta)}{\tilde{\beta}} $$
 
-$$ (\beta | \tilde{\beta}) = \frac{(\tilde{\beta} | \beta)(\beta)}{\int_{-\infinity}^{\infinity} (\tilde{\beta} | \beta)(\beta) d\beta}  $$
+$$ (\beta | \tilde{\beta}) = \frac{(\tilde{\beta} | \beta)(\beta)}{\int_{-\infty}^{\infty} (\tilde{\beta} | \beta)(\beta) d\beta}  $$
 
 There is no easy way to do this integral but to do it.  I will now substitute in the normal distributions and solve.  Note that the distribution of the estimated beta is simplified to $$ N(0,\frac{1}{N}) $$.  I will show this is correct, although it is stated incorrectly within the paper.
 
-$$\int_{-\infinity}^{\infinity} N(0,\frac{h^2}{M})N(\beta,\frac{1}{N}) d\beta $$
+$$\int_{-\infty}^{\infty} N(0,\frac{h^2}{M})N(\beta,\frac{1}{N}) d\beta $$
 
-$$\int_{-\infinity}^{\infinity}    \frac{1}{\sqrt{2\pi \frac{h^2}{M}}}exp[-\frac{(\beta-0)^2}{2\frac{h^2}{M}}]    \frac{1}{\sqrt{2\pi \frac{1}{N}}}exp[-\frac{(\tilde{beta}-\beta)^2}{2\frac{1}{N}}]   d\beta $$
+$$\int_{-\infty}^{\infty}    \frac{1}{\sqrt{2\pi \frac{h^2}{M}}}exp[-\frac{(\beta-0)^2}{2\frac{h^2}{M}}]    \frac{1}{\sqrt{2\pi \frac{1}{N}}}exp[-\frac{(\tilde{\beta}-\beta)^2}{2\frac{1}{N}}]   d\beta $$
 
-$$\frac{1}{2\pi}\frac{NM}{h^2}       \int_{-\infinity}^{\infinity}    exp[-\frac{(\beta-0)^2}{2\frac{h^2}{M}} -\frac{(\tilde{beta}-\beta)^2}{2\frac{1}{N}}]   d\beta $$
+$$\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}       \int_{-\infty}^{\infty}    exp[-\frac{(\beta-0)^2}{2\frac{h^2}{M}} -\frac{(\tilde{\beta}-\beta)^2}{2\frac{1}{N}}]   d\beta $$
