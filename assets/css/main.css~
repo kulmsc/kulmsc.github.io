@@ -4811,9 +4811,9 @@ sub, sup {
 #particles-page-js {
   background: #1a222c;
   display: flex;
-  vertical-align: top;
+  vertical-align: bottom;
   width: 100%;
-  min-height: 50vh;
+  min-height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed
