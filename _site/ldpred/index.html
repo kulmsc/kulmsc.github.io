@@ -49,11 +49,11 @@
 
 <p>This equation is never explicitly stated (unfortunately), however it can be implied from the application of ordinary least squares (OLS) to obtain the estimated betas - which is the next step.  A typical application of OLS looks like:</p>
 
-<script type="math/tex; mode=display">\widetilde{\beta} = (X'X)^{-1}X'Y</script>
+<script type="math/tex; mode=display">\tilde{\beta} = (X'X)^{-1}X'Y</script>
 
 <p>We use the over character tilde to signify estimated values.  The LDPred method was written for summary statistics, which are assumed to be generated using univariate regression, or one variant at a time.  Single variant OLS for variant i looks like:</p>
 
-<script type="math/tex; mode=display">\widetilde{\beta_i} = (X_i'X_i)^{-1}X_i'Y</script>
+<script type="math/tex; mode=display">\tilde{\beta_i} = (X_i'X_i)^{-1}X_i'Y</script>
 
 <p>While I cannot find a great proof, it is easy to verify through simulation that if <script type="math/tex">X_i</script> has a mean of 0 and sd of 1:</p>
 
@@ -61,47 +61,55 @@
 
 <p>Therefore our marginal regression turns into:</p>
 
-<script type="math/tex; mode=display">\widetilde{\beta_i} = \frac{X_i'Y}{N}</script>
+<script type="math/tex; mode=display">\tilde{\beta_i} = \frac{X_i'Y}{N}</script>
 
-<p>Before moving forward we need to make a few more assumptions, or rather give our variables some prior distributions.  Specifically we let <script type="math/tex">\beta \sim N(0,h^2/M)</script>. The variance is logical, as the greater the heritability of the trait the larger the possibility of getting large impact variants.  Similarly, the greater number of variants the better our estimates can get (similar to the error of the mean).  Since <script type="math/tex">\beta</script> is normally distributed, so is <script type="math/tex">\widetilde{\beta}</script>.  We can find the parameters of this normal distribution as follows:</p>
+<p>Before moving forward we need to make a few more assumptions, or rather give our variables some prior distributions.  Specifically we let <script type="math/tex">\beta \sim N(0,h^2/M)</script>. The variance is logical, as the greater the heritability of the trait the larger the possibility of getting large impact variants.  Similarly, the greater number of variants the better our estimates can get (similar to the error of the mean).  Since <script type="math/tex">\beta</script> is normally distributed, so is <script type="math/tex">\tilde{\beta}</script>.  We can find the parameters of this normal distribution as follows:</p>
 
-<script type="math/tex; mode=display">\widetilde{\beta_i} = (X'X)^{-1}X'Y</script>
+<script type="math/tex; mode=display">\tilde{\beta_i} = (X'X)^{-1}X'Y</script>
 
-<script type="math/tex; mode=display">E[\widetilde{\beta_i}] = (X'X)^{-1}X'E[Y]</script>
+<script type="math/tex; mode=display">E[\tilde{\beta_i}] = (X'X)^{-1}X'E[Y]</script>
 
-<script type="math/tex; mode=display">E[\widetilde{\beta_i}] = (X'X)^{-1}X'X\beta_i</script>
+<script type="math/tex; mode=display">E[\tilde{\beta_i}] = (X'X)^{-1}X'X\beta_i</script>
 
-<script type="math/tex; mode=display">E[\widetilde{\beta_i}] = \beta_i</script>
+<script type="math/tex; mode=display">E[\tilde{\beta_i}] = \beta_i</script>
 
 <script type="math/tex; mode=display">Var(y) = Var(X\beta + \epsilon)</script>
 
-<p>$$ Var(y) = Var(\epsilon) = 1 - \frac{h^2}{M}</p>
+<script type="math/tex; mode=display">Var(y) = Var(\epsilon) = 1 - \frac{h^2}{M}</script>
 
-<script type="math/tex; mode=display">Var(\widetilde{\beta_i}) = Var((X'X)^{-1}X'Y)</script>
+<script type="math/tex; mode=display">Var(\tilde{\beta_i}) = Var((X'X)^{-1}X'Y)</script>
 
-<script type="math/tex; mode=display">Var(\widetilde{\beta_i}) = (X'X)^{-1}X'Var(Y)X(X'X)^{-1}</script>
+<script type="math/tex; mode=display">Var(\tilde{\beta_i}) = (X'X)^{-1}X'Var(Y)X(X'X)^{-1}</script>
 
-<script type="math/tex; mode=display">Var(\widetilde{\beta_i}) = (N)^{-2}X_i'Var(Y)X_i</script>
+<script type="math/tex; mode=display">Var(\tilde{\beta_i}) = (N)^{-2}X_i'Var(Y)X_i</script>
 
-<script type="math/tex; mode=display">Var(\widetilde{\beta_i}) = (N)^{-2}X_i'(1 - \frac{h^2}{M})X_i</script>
+<script type="math/tex; mode=display">Var(\tilde{\beta_i}) = (N)^{-2}X_i'(1 - \frac{h^2}{M})X_i</script>
 
-<script type="math/tex; mode=display">Var(\widetilde{\beta_i}) = (N)^{-2}X_i'X_i(1 - \frac{h^2}{M})</script>
+<script type="math/tex; mode=display">Var(\tilde{\beta_i}) = (N)^{-2}X_i'X_i(1 - \frac{h^2}{M})</script>
 
-<script type="math/tex; mode=display">Var(\widetilde{\beta_i}) = \frac{1-h^2}{M}N</script>
+<script type="math/tex; mode=display">Var(\tilde{\beta_i}) = \frac{1-h^2}{M}N</script>
 
 <p>The more confusing process is the variance, in which we first need to calculate out the variance of y.  For some reason in this case we treat beta as a fixed effect leaving us with the variance of epsilon.  Epsilon is the error term, which accounts for the sum of total variance in the phenotype not accounted by the genotypes.  Therefore it is simply one minus the per SNP heritabiliy (per SNP because this is the variance per variant). Note that I got much of this process from <a href="https://www.cambridge.org/core/books/semiparametric-regression/02FC9A9435232CA67532B4D31874412C">Ruppert</a>, specifically on page 30 in Chapter 2.</p>
 
 <p>Putting both pieces together our final distribution is:</p>
 
-<script type="math/tex; mode=display">\widetilde{\beta_i} \sim N(\beta_i,\frac{1-\frac{h^2}{M}}{N})</script>
+<script type="math/tex; mode=display">\tilde{\beta_i} \sim N(\beta_i,\frac{1-\frac{h^2}{M}}{N})</script>
 
 <h3 id="calculate-posterior-beta">Calculate Posterior Beta</h3>
 
 <p>Now that we have fully defined the estimated beta, we can use this value to work back and get the posterior distribution of beta itself.  While the paper points to <a href="https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1003348">Dudbridge</a>, which points to <a href="https://www.cambridge.org/core/books/semiparametric-regression/02FC9A9435232CA67532B4D31874412C">Ruppert</a>, there is no satisfactory explanation for the seemingly nice result that is achieved.  The work by Dudbrdige would indicate that some BLUP style calculations are needed, but rather this is simply a direct application of Bayes Law:</p>
 
-<script type="math/tex; mode=display">(\beta | \widetilde{\beta}) = \frac{(\widetilde{\beta} | \beta)(\beta)}{\widetilde{\beta}}</script>
+<script type="math/tex; mode=display">(\beta | \tilde{\beta}) = \frac{(\tilde{\beta} | \beta)(\beta)}{\tilde{\beta}}</script>
 
-<script type="math/tex; mode=display">(\beta | \widetilde{\beta}) = \frac{(\widetilde{\beta} | \beta)(\beta)}{\widetilde{\beta}}</script>
+<script type="math/tex; mode=display">(\beta | \tilde{\beta}) = \frac{(\tilde{\beta} | \beta)(\beta)}{\int_{-\infinity}^{\infinity} (\tilde{\beta} | \beta)(\beta) d\beta}</script>
+
+<p>There is no easy way to do this integral but to do it.  I will now substitute in the normal distributions and solve.  Note that the distribution of the estimated beta is simplified to <script type="math/tex">N(0,\frac{1}{N})</script>.  I will show this is correct, although it is stated incorrectly within the paper.</p>
+
+<script type="math/tex; mode=display">\int_{-\infinity}^{\infinity} N(0,\frac{h^2}{M})N(\beta,\frac{1}{N}) d\beta</script>
+
+<script type="math/tex; mode=display">\int_{-\infinity}^{\infinity}    \frac{1}{\sqrt{2\pi \frac{h^2}{M}}}exp[-\frac{(\beta-0)^2}{2\frac{h^2}{M}}]    \frac{1}{\sqrt{2\pi \frac{1}{N}}}exp[-\frac{(\tilde{beta}-\beta)^2}{2\frac{1}{N}}]   d\beta</script>
+
+<script type="math/tex; mode=display">\frac{1}{2\pi}\frac{NM}{h^2}       \int_{-\infinity}^{\infinity}    exp[-\frac{(\beta-0)^2}{2\frac{h^2}{M}} -\frac{(\tilde{beta}-\beta)^2}{2\frac{1}{N}}]   d\beta</script>
 
     </div>
 

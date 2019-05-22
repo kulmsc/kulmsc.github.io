@@ -23,11 +23,11 @@ $$Y$$ is a $$N \times 1$$ vector of phenotypes, $$X$$ is a $$N \times M$$ genoty
 
 This equation is never explicitly stated (unfortunately), however it can be implied from the application of ordinary least squares (OLS) to obtain the estimated betas - which is the next step.  A typical application of OLS looks like:
 
-$$ \widetilde{\beta} = (X'X)^{-1}X'Y $$
+$$ \tilde{\beta} = (X'X)^{-1}X'Y $$
 
 We use the over character tilde to signify estimated values.  The LDPred method was written for summary statistics, which are assumed to be generated using univariate regression, or one variant at a time.  Single variant OLS for variant i looks like:
 
-$$ \widetilde{\beta_i} = (X_i'X_i)^{-1}X_i'Y $$
+$$ \tilde{\beta_i} = (X_i'X_i)^{-1}X_i'Y $$
 
 While I cannot find a great proof, it is easy to verify through simulation that if $$X_i$$ has a mean of 0 and sd of 1:
 
@@ -35,44 +35,52 @@ $$ X_i'X_i = \sum_{j=1}^N X_{i,j}^2 = N $$
 
 Therefore our marginal regression turns into:
 
-$$ \widetilde{\beta_i} = \frac{X_i'Y}{N} $$
+$$ \tilde{\beta_i} = \frac{X_i'Y}{N} $$
 
-Before moving forward we need to make a few more assumptions, or rather give our variables some prior distributions.  Specifically we let $$ \beta \sim N(0,h^2/M) $$. The variance is logical, as the greater the heritability of the trait the larger the possibility of getting large impact variants.  Similarly, the greater number of variants the better our estimates can get (similar to the error of the mean).  Since $$\beta$$ is normally distributed, so is $$\widetilde{\beta}$$.  We can find the parameters of this normal distribution as follows:
+Before moving forward we need to make a few more assumptions, or rather give our variables some prior distributions.  Specifically we let $$ \beta \sim N(0,h^2/M) $$. The variance is logical, as the greater the heritability of the trait the larger the possibility of getting large impact variants.  Similarly, the greater number of variants the better our estimates can get (similar to the error of the mean).  Since $$\beta$$ is normally distributed, so is $$\tilde{\beta}$$.  We can find the parameters of this normal distribution as follows:
 
-$$ \widetilde{\beta_i} = (X'X)^{-1}X'Y $$
+$$ \tilde{\beta_i} = (X'X)^{-1}X'Y $$
 
-$$ E[\widetilde{\beta_i}] = (X'X)^{-1}X'E[Y] $$
+$$ E[\tilde{\beta_i}] = (X'X)^{-1}X'E[Y] $$
 
-$$ E[\widetilde{\beta_i}] = (X'X)^{-1}X'X\beta_i $$
+$$ E[\tilde{\beta_i}] = (X'X)^{-1}X'X\beta_i $$
 
-$$ E[\widetilde{\beta_i}] = \beta_i $$
+$$ E[\tilde{\beta_i}] = \beta_i $$
 
 $$ Var(y) = Var(X\beta + \epsilon) $$
 
-$$ Var(y) = Var(\epsilon) = 1 - \frac{h^2}{M}
+$$ Var(y) = Var(\epsilon) = 1 - \frac{h^2}{M} $$
 
-$$ Var(\widetilde{\beta_i}) = Var((X'X)^{-1}X'Y) $$
+$$ Var(\tilde{\beta_i}) = Var((X'X)^{-1}X'Y) $$
 
-$$ Var(\widetilde{\beta_i}) = (X'X)^{-1}X'Var(Y)X(X'X)^{-1} $$
+$$ Var(\tilde{\beta_i}) = (X'X)^{-1}X'Var(Y)X(X'X)^{-1} $$
 
-$$ Var(\widetilde{\beta_i}) = (N)^{-2}X_i'Var(Y)X_i $$
+$$ Var(\tilde{\beta_i}) = (N)^{-2}X_i'Var(Y)X_i $$
 
-$$ Var(\widetilde{\beta_i}) = (N)^{-2}X_i'(1 - \frac{h^2}{M})X_i $$
+$$ Var(\tilde{\beta_i}) = (N)^{-2}X_i'(1 - \frac{h^2}{M})X_i $$
 
-$$ Var(\widetilde{\beta_i}) = (N)^{-2}X_i'X_i(1 - \frac{h^2}{M}) $$
+$$ Var(\tilde{\beta_i}) = (N)^{-2}X_i'X_i(1 - \frac{h^2}{M}) $$
 
-$$ Var(\widetilde{\beta_i}) = \frac{1-h^2}{M}N $$
+$$ Var(\tilde{\beta_i}) = \frac{1-h^2}{M}N $$
 
 The more confusing process is the variance, in which we first need to calculate out the variance of y.  For some reason in this case we treat beta as a fixed effect leaving us with the variance of epsilon.  Epsilon is the error term, which accounts for the sum of total variance in the phenotype not accounted by the genotypes.  Therefore it is simply one minus the per SNP heritabiliy (per SNP because this is the variance per variant). Note that I got much of this process from [Ruppert](https://www.cambridge.org/core/books/semiparametric-regression/02FC9A9435232CA67532B4D31874412C), specifically on page 30 in Chapter 2.
 
 Putting both pieces together our final distribution is:
 
-$$ \widetilde{\beta_i} \sim N(\beta_i,\frac{1-\frac{h^2}{M}}{N}) $$
+$$ \tilde{\beta_i} \sim N(\beta_i,\frac{1-\frac{h^2}{M}}{N}) $$
 
 ### Calculate Posterior Beta
 
 Now that we have fully defined the estimated beta, we can use this value to work back and get the posterior distribution of beta itself.  While the paper points to [Dudbridge](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1003348), which points to [Ruppert](https://www.cambridge.org/core/books/semiparametric-regression/02FC9A9435232CA67532B4D31874412C), there is no satisfactory explanation for the seemingly nice result that is achieved.  The work by Dudbrdige would indicate that some BLUP style calculations are needed, but rather this is simply a direct application of Bayes Law:
 
-$$ (\beta | \widetilde{\beta}) = \frac{(\widetilde{\beta} | \beta)(\beta)}{\widetilde{\beta}} $$
+$$ (\beta | \tilde{\beta}) = \frac{(\tilde{\beta} | \beta)(\beta)}{\tilde{\beta}} $$
 
-$$ (\beta | \widetilde{\beta}) = \frac{(\widetilde{\beta} | \beta)(\beta)}{\widetilde{\beta}} $$
+$$ (\beta | \tilde{\beta}) = \frac{(\tilde{\beta} | \beta)(\beta)}{\int_{-\infinity}^{\infinity} (\tilde{\beta} | \beta)(\beta) d\beta}  $$
+
+There is no easy way to do this integral but to do it.  I will now substitute in the normal distributions and solve.  Note that the distribution of the estimated beta is simplified to $$ N(0,\frac{1}{N}) $$.  I will show this is correct, although it is stated incorrectly within the paper.
+
+$$\int_{-\infinity}^{\infinity} N(0,\frac{h^2}{M})N(\beta,\frac{1}{N}) d\beta $$
+
+$$\int_{-\infinity}^{\infinity}    \frac{1}{\sqrt{2\pi \frac{h^2}{M}}}exp[-\frac{(\beta-0)^2}{2\frac{h^2}{M}}]    \frac{1}{\sqrt{2\pi \frac{1}{N}}}exp[-\frac{(\tilde{beta}-\beta)^2}{2\frac{1}{N}}]   d\beta $$
+
+$$\frac{1}{2\pi}\frac{NM}{h^2}       \int_{-\infinity}^{\infinity}    exp[-\frac{(\beta-0)^2}{2\frac{h^2}{M}} -\frac{(\tilde{beta}-\beta)^2}{2\frac{1}{N}}]   d\beta $$
