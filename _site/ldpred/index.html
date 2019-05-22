@@ -33,13 +33,29 @@
     <div class="forMarkdown">
       <h2 id="ldpred-derivation">LDPred Derivation</h2>
 
-<p>In this section I will attempt to derive the LDPred method for shrinking GWAS effect sizes so they may be used in polygenic risk scoring.  The paper has its own derivation, however I found that many steps were missed or even wrong.  Please contact me if you find any errors within this derivation.</p>
+<p>In this section I will attempt to derive the LDPred method for shrinking GWAS effect sizes so they may be used in polygenic risk scoring.  In this process I will mention other papers that use Bayes Law to estimate the posterior GWAS effect size.  The <a href="https://www.cell.com/action/showPdf?pii=S0002-9297%2815%2900365-1">paper</a> has its own derivation, however I found that many steps were missed or even wrong.  Please contact me if you find any errors within this derivation.</p>
 
 <p>As within nearly all polygenic risk score methods, LDPred begins with the regression equation that has been assumed to be used within the GWAS.</p>
 
 <script type="math/tex; mode=display">Y = X\beta + \epsilon</script>
 
-<p>This equation is never explicitly stated (unfortunately), however it can be implied from the application of marginal least squares to obtain the estimated betas.</p>
+<p><script type="math/tex">Y</script> is a <script type="math/tex">Nx1</script> vector of phenotypes, <script type="math/tex">X</script> is a <script type="math/tex">NxM</script> genotype matrix, <script type="math/tex">\beta</script> is a <script type="math/tex">Mx1</script> vector of effects, and <script type="math/tex">\epsilon</script> is a <script type="math/tex">Nx1</script> vector of error terms.  An assumption is made that the <script type="math/tex">Y</script> vector and each column/variant within <script type="math/tex">X</script> has been mean centered and standardized to have variance of 1.</p>
+
+<p>This equation is never explicitly stated (unfortunately), however it can be implied from the application of ordinary least squares (OLS) to obtain the estimated betas - which is the next step.  A typical application of OLS looks like:</p>
+
+<script type="math/tex; mode=display">\beta = (X'X)^{-1}X'Y</script>
+
+<p>The LDPred method was written for summary statistics, which are assumed to be generated using univariate regression, or one variant at a time.  Single variant OLS for variant i looks like:</p>
+
+<script type="math/tex; mode=display">\beta_i = (X_i'X_i)^{-1}X_i'Y</script>
+
+<p>While I cannot find a great proof, it is easy to verify through simulation that if <script type="math/tex">X_i</script> has a mean of 0 and sd of 1:</p>
+
+<p>$$ X_i’X_i = \sum_{j=1}^N X_{i,j}^2 = N</p>
+
+<p>Therefore our marginal regression turns into:</p>
+
+<script type="math/tex; mode=display">\beta_i = \frac{X_i'Y}{N}</script>
 
     </div>
 

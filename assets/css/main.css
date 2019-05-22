@@ -4832,9 +4832,9 @@ sub, sup {
      position: relative;
      color: #000000;
      font-size: 18px;
-     line-height: 18px;
-     margin-top: 100px;
+     line-height: 25px;
+     margin-top: 50px;
      margin-bottom: 100px;
-     margin-right: 150px;
-     margin-left: 150px;
+     margin-right: 250px;
+     margin-left: 250px;
  }
