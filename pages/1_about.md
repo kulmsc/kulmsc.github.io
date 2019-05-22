@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-{:center: style="text-align: center"}
+<p style="text-align: center;">
 
 text
 
@@ -14,4 +14,4 @@ About content goes here.
 * Another list item
 * Change
 
-{:center}
+<\p>
