@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>About</title>
+  <title>ldpred</title>
   <meta name="description" content="Posting ground for my projects and musings within grad school (and hopefully beyond!)">
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
@@ -31,11 +31,15 @@
 
       </section>
     <div class="forMarkdown">
-      <p>This is a long line of text let us see how long it can go.  This is a long line of text let us see how long it can go. This is a long line of text let us see how long it can go. This is a long line of text let us see how long it can go. This is a long line of text let us see how long it can go. This is a long line of text let us see how long it can go. This is a long line of text let us see how long it can go. This is a long line of text let us see how long it can go. This is a long line of text let us see how long it can go.</p>
+      <h2 id="ldpred-derivation">LDPred Derivation</h2>
 
-<p>Test doing math: <script type="math/tex">\beta^2</script></p>
+<p>In this section I will attempt to derive the LDPred method for shrinking GWAS effect sizes so they may be used in polygenic risk scoring.  The paper has its own derivation, however I found that many steps were missed or even wrong.  Please contact me if you find any errors within this derivation.</p>
 
-<p>This is a long line of text let us see how long it can go.This is a long line of text let us see how long it can go.This is a long line of text let us see how long it can go.This is a long line of text let us see how long it can go.</p>
+<p>As within nearly all polygenic risk score methods, LDPred begins with the regression equation that has been assumed to be used within the GWAS.</p>
+
+<script type="math/tex; mode=display">Y = X\beta + \epsilon</script>
+
+<p>This equation is never explicitly stated (unfortunately), however it can be implied from the application of marginal least squares to obtain the estimated betas.</p>
 
     </div>
 
