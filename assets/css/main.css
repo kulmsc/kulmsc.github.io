@@ -4807,3 +4807,20 @@ sub, sup {
     font-size: 15px
   }
 }
+
+#particles-page-js {
+  background: #1a222c;
+  display: flex;
+  vertical-align: bottom;
+  width: 100%;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed
+}
+
+#particles-page-js .particles-js-canvas-el {
+  width: 100% !important;
+  height: 100vh !important
+}
+
