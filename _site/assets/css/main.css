@@ -4808,12 +4808,17 @@ sub, sup {
   }
 }
 
-.page-header #particles-js {
+.shortParticle {
+  text-align: left;
+}
+
+.shortParticle #particles-js {
   background: #1a222c;
   display: flex;
-  vertical-align: bottom;
+  vertical-align: top;
   width: 100%;
-  min-height: 50vh;
+  min-height: 20vh;
+  height: 20vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed
