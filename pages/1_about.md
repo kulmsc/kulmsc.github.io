@@ -12,3 +12,5 @@ About content goes here.
 Not doing a list
 
 Just many new lines
+
+Test doing math: $$\beta$$
