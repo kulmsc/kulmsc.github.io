@@ -4732,23 +4732,6 @@ sub, sup {
   color: #fff
 }
 
-
-#particles-new-js {
-  background: #1a222c;
-  display: flex;
-  vertical-align: top;
-  width: 100%;
-  min-height: 30vh;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed
-}
-
-#particles-new-js .particles-js-canvas-el {
-  width: 100% !important;
-  height: 30vh !important
-}
-
 .page-header {
   z-index: 1;
   text-align: left;
