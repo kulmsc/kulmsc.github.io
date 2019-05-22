@@ -4773,18 +4773,18 @@ sub, sup {
   }
 }
 
-.header-page-icons {
+.page-header-icons {
   display: flex;
   justify-content: center;
   text-align: center
 }
 
-.down, .header-page-icons .icon {
+.down, .page-header-icons .icon {
   color: #fff;
   text-align: center
 }
 
-.header-page-icons .icon {
+.page-header-icons .icon {
   height: 20px;
   padding: 10px;
   border-radius: 50%;
@@ -4795,7 +4795,7 @@ sub, sup {
   margin: 5px
 }
 
-.header-page-icons .icon:active, .header-page-icons .icon:hover {
+.page-header-icons .icon:active, .page-header-icons .icon:hover {
   color: #1a222c;
   background: #fff
 }
@@ -4808,19 +4808,13 @@ sub, sup {
   }
 }
 
-#particles-page-js {
+.page-header #particles-js {
   background: #1a222c;
   display: flex;
-  vertical-align: top;
+  vertical-align: bottom;
   width: 100%;
   min-height: 50vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed
 }
-
-#particles-page-js .particles-page-js-canvas-el {
-  width: 100% !important;
-  height: 100vh !important
-}
-
