@@ -4823,3 +4823,7 @@ sub, sup {
   background-size: cover;
   background-attachment: fixed
 }
+
+.forMarkdown {
+  text-align: center;
+}
