@@ -4815,10 +4815,15 @@ sub, sup {
 .shortParticle #particles-js {
   background: #1a222c;
   display: flex;
-  vertical-align: bottom;
+  vertical-align: top;
   width: 100%;
   min-height: 50vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed
+}
+
+.shortParticle #particles-js .particles-js-canvas-el {
+  width: 100% !important;
+  height: 50vh !important
 }
