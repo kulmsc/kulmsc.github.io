@@ -4808,7 +4808,11 @@ sub, sup {
   }
 }
 
-.page-header #particles-js {
+.shortParticle {
+  text-align: left;
+}
+
+.shortParticle #particles-js {
   background: #1a222c;
   display: flex;
   vertical-align: bottom;
