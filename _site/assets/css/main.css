@@ -4833,4 +4833,8 @@ sub, sup {
      color: #000000;
      font-size: 18px;
      line-height: 18px;
+     margin-top: 100px;
+     margin-bottom: 100px;
+     margin-right: 150px;
+     margin-left: 150px;
  }
