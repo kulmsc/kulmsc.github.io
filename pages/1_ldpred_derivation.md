@@ -78,7 +78,7 @@ $$ (\beta | \tilde{\beta}) = \frac{(\tilde{\beta} | \beta)(\beta)}{\tilde{\beta}
 
 $$ (\beta | \tilde{\beta}) = \frac{(\tilde{\beta} | \beta)(\beta)}{\int_{-\infty}^{\infty} (\tilde{\beta} | \beta)(\beta) d\beta}  $$
 
-There is no easy way to do this integral but to do it.  I will now substitute in the normal distributions and solve.  Note that the distribution of the estimated beta is simplified to $$ N(\beta,\frac{1}{N}) $$.  I will show this is correct, or at least produces to right result, although it is stated incorrectly within the paper as $$Var(\beta_i)=1$$.  
+There is no easy way to do this integral but to do it.  I will now substitute in the normal distributions and solve.  Note that the distribution of the estimated beta is simplified to $$ N(\beta,\frac{1}{N}) $$.  I will show this is correct, or at least produces to right result, although it is stated incorrectly within the paper as $$Var(\beta_i)=1$$.
 
 $$\int_{-\infty}^{\infty} N(0,\frac{h^2}{M})N(\beta,\frac{1}{N}) d\beta $$
 
@@ -86,7 +86,7 @@ $$\int_{-\infty}^{\infty}    \frac{1}{\sqrt{2\pi \frac{h^2}{M}}}exp[-\frac{(\bet
 
 $$\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}       \int_{-\infty}^{\infty}    exp[-\frac{(\beta-0)^2}{2\frac{h^2}{M}} -\frac{(\tilde{\beta}-\beta)^2}{2\frac{1}{N}}]   d\beta $$
 
-$$\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}  \int_{-\infty}^{\infty}  exp[-\frac{1}{2}(\frac{(M\beta)^2}{h^2} + \frac{N (\tilde{\beta}^2- 2\tilde{\beta}\beta + \beta^2)}{1})]   d\beta $$
+$$\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}  \int_{-\infty}^{\infty}  exp[-\frac{1}{2}(\frac{M}{h^2}\beta^2 + N (\tilde{\beta}^2- 2\tilde{\beta}\beta + \beta^2))]   d\beta $$
 
 $$\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}  \int_{-\infty}^{\infty}  exp[-\frac{N\tilde{\beta}^2}{2}  + N \beta \tilde{\beta} - \frac{1}{2}(N+\frac{M}{h^2})\beta^2 ]   d\beta $$
 
@@ -102,10 +102,24 @@ $$c = \frac{1}{2}(N+\frac{M}{h^2}) = \frac{Nh^2 + M}{2h^2} $$
 
 Substituting becomes:
 
-$$ \sqrt{\frac{\pi}{\frac{Nh^2 + M}{2h^2}}} exp[\frac{N^2\tilde{\beta}^2}{4(\frac{1}{2}(N+\frac{M}{h^2}))} - \frac{N\tilde{\beta}^2}] $$
+$$ \sqrt{\frac{\pi}{\frac{Nh^2 + M}{2h^2}}} exp[\frac{N^2\tilde{\beta}^2}{4(\frac{1}{2}(N+\frac{M}{h^2}))} - \frac{N\tilde{\beta}^2}{2}] $$
 
-$$ \sqrt{\frac{2h^2\pi}{Nh^2 + M}}exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}] $$
+$$ \sqrt{\frac{2h^2\pi}{Nh^2 + M}} exp[\frac{1}{2} \frac{N^2\tilde{\beta}^2 - (N+\frac{M}{h^2})N\tilde{\beta}^2}{N+\frac{M}{h^2}} ] $$
+
+$$ \sqrt{\frac{2h^2\pi}{Nh^2 + M}} exp[\frac{1}{2} \frac{\frac{Nh^2}{M}\tilde{\beta}^2}{N+\frac{M}{h^2}} ] $$
+
+$$ \sqrt{\frac{2h^2\pi}{Nh^2 + M}} exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}] $$
 
 Now bringing back the coefficients we left out previously:
 
 $$\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}} \sqrt{\frac{2h^2\pi}{Nh^2 + M}}exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}] $$
+
+$$ \frac{1}{\sqrt{2\pi}}\sqrt{\frac{NM}{Nh^2+M}} exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}] $$
+
+$$ \frac{1}{\sqrt{2\pi}}\sqrt{\frac{1}{\frac{h^2}{M} + \frac{1}{N}}} exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}] $$
+
+The integral is done, but we still need to handle the numerator.  Noting that we are assuming the final answer to be a normal distribution all we need are the pieces within the exponent as they can define both the mean and variance.  I have included the constant terms thus far as this integral result in its entirety will come up later:
+
+$$ (\beta | \tilde{\beta}) = \frac{N(0,\frac{h^2}{M})N(\beta,\frac{1}{N})}{exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}]} $$
+
+$$ exp[-\frac{1}{2}\frac{\beta^2}{2\frac{h^2}{M}}] exp[-\frac{1}{2}\frac{(\tilde{\beta}-\beta)^2}{2\frac{1}{N}}] exp[\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}] $$

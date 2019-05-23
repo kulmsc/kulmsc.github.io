@@ -111,7 +111,7 @@
 
 <script type="math/tex; mode=display">\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}       \int_{-\infty}^{\infty}    exp[-\frac{(\beta-0)^2}{2\frac{h^2}{M}} -\frac{(\tilde{\beta}-\beta)^2}{2\frac{1}{N}}]   d\beta</script>
 
-<script type="math/tex; mode=display">\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}  \int_{-\infty}^{\infty}  exp[-\frac{1}{2}(\frac{(M\beta)^2}{h^2} + \frac{N (\tilde{\beta}^2- 2\tilde{\beta}\beta + \beta^2)}{1})]   d\beta</script>
+<script type="math/tex; mode=display">\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}  \int_{-\infty}^{\infty}  exp[-\frac{1}{2}(\frac{M}{h^2}\beta^2 + N (\tilde{\beta}^2- 2\tilde{\beta}\beta + \beta^2))]   d\beta</script>
 
 <script type="math/tex; mode=display">\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}  \int_{-\infty}^{\infty}  exp[-\frac{N\tilde{\beta}^2}{2}  + N \beta \tilde{\beta} - \frac{1}{2}(N+\frac{M}{h^2})\beta^2 ]   d\beta</script>
 
@@ -127,13 +127,27 @@
 
 <p>Substituting becomes:</p>
 
-<script type="math/tex; mode=display">\sqrt{\frac{\pi}{\frac{Nh^2 + M}{2h^2}}} exp[\frac{N^2\tilde{\beta}^2}{4(\frac{1}{2}(N+\frac{M}{h^2}))} - \frac{N\tilde{\beta}^2}]</script>
+<script type="math/tex; mode=display">\sqrt{\frac{\pi}{\frac{Nh^2 + M}{2h^2}}} exp[\frac{N^2\tilde{\beta}^2}{4(\frac{1}{2}(N+\frac{M}{h^2}))} - \frac{N\tilde{\beta}^2}{2}]</script>
 
-<script type="math/tex; mode=display">\sqrt{\frac{2h^2\pi}{Nh^2 + M}}exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}]</script>
+<script type="math/tex; mode=display">\sqrt{\frac{2h^2\pi}{Nh^2 + M}} exp[\frac{1}{2} \frac{N^2\tilde{\beta}^2 - (N+\frac{M}{h^2})N\tilde{\beta}^2}{N+\frac{M}{h^2}} ]</script>
+
+<script type="math/tex; mode=display">\sqrt{\frac{2h^2\pi}{Nh^2 + M}} exp[\frac{1}{2} \frac{\frac{Nh^2}{M}\tilde{\beta}^2}{N+\frac{M}{h^2}} ]</script>
+
+<script type="math/tex; mode=display">\sqrt{\frac{2h^2\pi}{Nh^2 + M}} exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}]</script>
 
 <p>Now bringing back the coefficients we left out previously:</p>
 
 <script type="math/tex; mode=display">\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}} \sqrt{\frac{2h^2\pi}{Nh^2 + M}}exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}]</script>
+
+<script type="math/tex; mode=display">\frac{1}{\sqrt{2\pi}}\sqrt{\frac{NM}{Nh^2+M}} exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}]</script>
+
+<script type="math/tex; mode=display">\frac{1}{\sqrt{2\pi}}\sqrt{\frac{1}{\frac{h^2}{M} + \frac{1}{N}}} exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}]</script>
+
+<p>The integral is done, but we still need to handle the numerator.  Noting that we are assuming the final answer to be a normal distribution all we need are the pieces within the exponent as they can define both the mean and variance.  I have included the constant terms thus far as this integral result in its entirety will come up later:</p>
+
+<script type="math/tex; mode=display">(\beta | \tilde{\beta}) = \frac{N(0,\frac{h^2}{M})N(\beta,\frac{1}{N})}{exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}]}</script>
+
+<script type="math/tex; mode=display">exp[-\frac{1}{2}\frac{\beta^2}{2\frac{h^2}{M}}] exp[-\frac{1}{2}\frac{(\tilde{\beta}-\beta)^2}{2\frac{1}{N}}] exp[\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}]</script>
 
     </div>
 
