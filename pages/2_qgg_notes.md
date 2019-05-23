@@ -6,7 +6,7 @@ permalink: /qgg_notes/
 
 # qgg-labs
 
-These are all the computer labs I wrote for a class I TA'd entitled, Quantiative Genetics and Genomics at Cornell University and Weill Cornell Medicine.  The base of the computer labs were written by Zoe Zhao, you can get see these labs at https://github.com/zoezhao997/BTRY6830 .  There are also video lectures that well correspond to the fundamental mathematics and biology of each lab.  You can find these videos at [Mezey Lab](http://mezeylab.cb.bscb.cornell.edu/Classes.aspx).
+These are all the computer labs I wrote for a class I TA'd entitled, Quantiative Genetics and Genomics at Cornell University and Weill Cornell Medicine.  The base of the computer labs were written by Zoe Zhao, you can get see these labs at [her github](https://github.com/zoezhao997/BTRY6830).  There are also video lectures that well correspond to the fundamental mathematics and biology of each lab.  You can find these videos at [Mezey Lab](http://mezeylab.cb.bscb.cornell.edu/Classes.aspx).
 
 **There** may still be some bugs within the labs, but for the most part they are great.  From basic R to MCMC, these labs provide a way to learn R in the context of genetics.  The labs are all based in R-Markdown, which is something I have not seen in many other R lessons so hopefully you can take advantage of that fact here.  **All of these labs are on my [github](https://github.com/kulmsc/qgg-labs)**.  The contents of the labs are as follows:
 
