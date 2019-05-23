@@ -13,38 +13,38 @@ There may still be some bugs within the labs, but for the most part they are gre
 ### [Lab 1](https://github.com/kulmsc/qgg-labs/tree/master/Lab1) - R Basics
 R as a calculator, Matrices and data frames
 
-### Lab 2 - R Slightly Beyond Basics
+### [Lab 2](https://github.com/kulmsc/qgg-labs/tree/master/Lab2) - R Slightly Beyond Basics
 R Markdown, Functions, For Loops, If Statements, Vector and Matrix calculations
 
-### Lab 3 - R More Beyond Basics
+### [Lab 3](https://github.com/kulmsc/qgg-labs/tree/master/Lab3) - R More Beyond Basics
 Plotting, Probability Distributions
 
-### Lab 4 - R Further Beyond Basics
+### [Lab 4](https://github.com/kulmsc/qgg-labs/tree/master/Lab4) - R Further Beyond Basics
 Boolean Data, Fancy vector indexing, Dealing with missing data
 
-### Lab 5 - R Beyond Basics
+### [Lab 5](https://github.com/kulmsc/qgg-labs/tree/master/Lab5) - R Beyond Basics
 Pseudo-random numbers, Pasting, Speeding up your code
 
-### Lab 6 - Genetics!
+### [Lab 6](https://github.com/kulmsc/qgg-labs/tree/master/Lab6) - Genetics!
 Reading in genotype data, Coding genotype data
 
-### Lab 7 - Genetic Association Testing
+### [Lab 7](https://github.com/kulmsc/qgg-labs/tree/master/Lab7) - Genetic Association Testing
 Performing hypothesis test on variants, Producing Manhattan plots
 
-### Lab 8 - GWAS
+### [Lab 8](https://github.com/kulmsc/qgg-labs/tree/master/Lab8) - GWAS
 Performing many association tests, QQ-Plots, Multiple hypothesis testing corrections, Principal Components Analysis
 
-### Lab 9 - Real eQTL Analysis
+### [Lab 9](https://github.com/kulmsc/qgg-labs/tree/master/Lab9) - Real eQTL Analysis
 Regrssion within R, Adding covariates, Converting data for PLINK
 
-### Lab 10 - Advanced GWAS
+### [Lab 10](https://github.com/kulmsc/qgg-labs/tree/master/Lab10) - Advanced GWAS
 Adding covariates rigerously, Logistic Regression
 
-### Lab 11 - IRLS Algorithm
+### [Lab 11](https://github.com/kulmsc/qgg-labs/tree/master/Lab11) - IRLS Algorithm
 Implementing the IRLS Algorithm, Making algorithms efficient
 
-### Lab 12 - EM Algorithm
+### [Lab 12](https://github.com/kulmsc/qgg-labs/tree/master/Lab12) - EM Algorithm
 Linear mixed models, Implementing EM Algorithm, Timing your code
 
-### Lab 13 - MCMC Algorithm
+### [Lab 13](https://github.com/kulmsc/qgg-labs/tree/master/Lab13) - MCMC Algorithm
 Explanation of Markov Chains and Monte Carlo Sampling, Implementing MCMC Algorithm

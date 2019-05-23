@@ -15,7 +15,7 @@ In this section I will attempt to derive the LDPred method for shrinking GWAS ef
 
 ### Calculate Estimated Beta
 
-As within nearly all polygenic risk score methods, LDPred begins with the regression equation that has been assumed to be used within the GWAS.
+As within nearly all polygenic risk score methods, LDPred begins with a simple linear model connecting phenotypes and genotypes.  Note that in this equation we are regressing all of the variants simultaneously.  This is not how GWASs are carried out, and therefore summary statistics are generated.  However it is the most accurate yet simple model.
 
 $$ Y = X\beta + \epsilon $$
 
@@ -47,6 +47,7 @@ $$ E[\tilde{\beta_i}] = (X'X)^{-1}X'X\beta_i $$
 
 $$ E[\tilde{\beta_i}] = \beta_i $$
 
+
 $$ Var(y) = Var(X\beta + \epsilon) $$
 
 $$ Var(y) = Var(\epsilon) = 1 - \frac{h^2}{M} $$
@@ -61,7 +62,7 @@ $$ Var(\tilde{\beta_i}) = (N)^{-2}X_i'(1 - \frac{h^2}{M})X_i $$
 
 $$ Var(\tilde{\beta_i}) = (N)^{-2}X_i'X_i(1 - \frac{h^2}{M}) $$
 
-$$ Var(\tilde{\beta_i}) = \frac{1-h^2}{M}N $$
+$$ Var(\tilde{\beta_i}) = \frac{1-\frac{h^2}{M}}{N} $$
 
 The more confusing process is the variance, in which we first need to calculate out the variance of y.  For some reason in this case we treat beta as a fixed effect leaving us with the variance of epsilon.  Epsilon is the error term, which accounts for the sum of total variance in the phenotype not accounted by the genotypes.  Therefore it is simply one minus the per SNP heritabiliy (per SNP because this is the variance per variant). Note that I got much of this process from [Ruppert](https://www.cambridge.org/core/books/semiparametric-regression/02FC9A9435232CA67532B4D31874412C), specifically on page 30 in Chapter 2.
 
@@ -77,7 +78,7 @@ $$ (\beta | \tilde{\beta}) = \frac{(\tilde{\beta} | \beta)(\beta)}{\tilde{\beta}
 
 $$ (\beta | \tilde{\beta}) = \frac{(\tilde{\beta} | \beta)(\beta)}{\int_{-\infty}^{\infty} (\tilde{\beta} | \beta)(\beta) d\beta}  $$
 
-There is no easy way to do this integral but to do it.  I will now substitute in the normal distributions and solve.  Note that the distribution of the estimated beta is simplified to $$ N(0,\frac{1}{N}) $$.  I will show this is correct, although it is stated incorrectly within the paper.
+There is no easy way to do this integral but to do it.  I will now substitute in the normal distributions and solve.  Note that the distribution of the estimated beta is simplified to $$ N(\beta,\frac{1}{N}) $$.  I will show this is correct, or at least produces to right result, although it is stated incorrectly within the paper as $$Var(\beta_i)=1$$.  
 
 $$\int_{-\infty}^{\infty} N(0,\frac{h^2}{M})N(\beta,\frac{1}{N}) d\beta $$
 
