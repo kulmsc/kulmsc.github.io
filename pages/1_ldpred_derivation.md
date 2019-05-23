@@ -86,13 +86,13 @@ $$\int_{-\infty}^{\infty}    \frac{1}{\sqrt{2\pi \frac{h^2}{M}}}exp[-\frac{(\bet
 
 $$\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}       \int_{-\infty}^{\infty}    exp[-\frac{(\beta-0)^2}{2\frac{h^2}{M}} -\frac{(\tilde{\beta}-\beta)^2}{2\frac{1}{N}}]   d\beta $$
 
-$$\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}  \int_{-\infty}^{\infty}  exp[-\frac{1}{2}(\frac{(M\beta)^2}{h^2} + \frac{N (\tilde{\beta}^2- 2\tilde{\beta}\beta + \beta^2)  }{1)]   d\beta $$
+$$\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}  \int_{-\infty}^{\infty}  exp[-\frac{1}{2}(\frac{(M\beta)^2}{h^2} + \frac{N (\tilde{\beta}^2- 2\tilde{\beta}\beta + \beta^2)}{1})]   d\beta $$
 
 $$\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}  \int_{-\infty}^{\infty}  exp[-\frac{N\tilde{\beta}^2}{2}  + N \beta \tilde{\beta} - \frac{1}{2}(N+\frac{M}{h^2})\beta^2 ]   d\beta $$
 
 This integral is clearly very difficult to do, so I will refer to a book of integral or in my case Wolfram alpha, which stats:
 
-$$ \int_{-\infty}^{\infty} exp[-a + bx -cx^2]dx = \sqrt{\frac{\pi}{c}}exp[\frac{b^2}{4c}-a]
+$$ \int_{-\infty}^{\infty} exp[-a + bx -cx^2]dx = \sqrt{\frac{\pi}{c}}exp[\frac{b^2}{4c}-a] $$
 
 $$a = \frac{N\tilde{\beta}^2}{2} $$
 
