@@ -111,6 +111,30 @@
 
 <script type="math/tex; mode=display">\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}       \int_{-\infty}^{\infty}    exp[-\frac{(\beta-0)^2}{2\frac{h^2}{M}} -\frac{(\tilde{\beta}-\beta)^2}{2\frac{1}{N}}]   d\beta</script>
 
+<script type="math/tex; mode=display">\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}  \int_{-\infty}^{\infty}  exp[-\frac{1}{2}(\frac{(M\beta)^2}{h^2} + \frac{N (\tilde{\beta}^2- 2\tilde{\beta}\beta + \beta^2)  }{1)]   d\beta</script>
+
+<script type="math/tex; mode=display">\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}}  \int_{-\infty}^{\infty}  exp[-\frac{N\tilde{\beta}^2}{2}  + N \beta \tilde{\beta} - \frac{1}{2}(N+\frac{M}{h^2})\beta^2 ]   d\beta</script>
+
+<p>This integral is clearly very difficult to do, so I will refer to a book of integral or in my case Wolfram alpha, which stats:</p>
+
+<p>$$ \int_{-\infty}^{\infty} exp[-a + bx -cx^2]dx = \sqrt{\frac{\pi}{c}}exp[\frac{b^2}{4c}-a]</p>
+
+<script type="math/tex; mode=display">a = \frac{N\tilde{\beta}^2}{2}</script>
+
+<script type="math/tex; mode=display">b = N\tilde{\beta}</script>
+
+<script type="math/tex; mode=display">c = \frac{1}{2}(N+\frac{M}{h^2}) = \frac{Nh^2 + M}{2h^2}</script>
+
+<p>Substituting becomes:</p>
+
+<script type="math/tex; mode=display">\sqrt{\frac{\pi}{\frac{Nh^2 + M}{2h^2}}} exp[\frac{N^2\tilde{\beta}^2}{4(\frac{1}{2}(N+\frac{M}{h^2}))} - \frac{N\tilde{\beta}^2}]</script>
+
+<script type="math/tex; mode=display">\sqrt{\frac{2h^2\pi}{Nh^2 + M}}exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}]</script>
+
+<p>Now bringing back the coefficients we left out previously:</p>
+
+<script type="math/tex; mode=display">\frac{1}{2\pi} \sqrt{\frac{NM}{h^2}} \sqrt{\frac{2h^2\pi}{Nh^2 + M}}exp[-\frac{1}{2}\frac{\tilde{\beta}^2}{\frac{h^2}{M} + \frac{1}{N}}]</script>
+
     </div>
 
       </div>
