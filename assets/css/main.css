@@ -4732,11 +4732,10 @@ sub, sup {
   color: #fff;
 }
 
-.page-header-container {
-  justify-content: center;
-}
+
 
 .page-header {
+  justify-content: space-between;
   z-index: 1;
   color: #fff;
   position: fixed;
