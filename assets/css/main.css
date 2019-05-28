@@ -4764,6 +4764,7 @@ sub, sup {
   text-align: right;
   font-size: 18px;
   color: #fff;
+  display: block;
 }
 
 @media only screen and (min-width:550px) {
