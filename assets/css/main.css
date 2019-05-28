@@ -4745,6 +4745,7 @@ sub, sup {
 }
 
 .page-header .site-title {
+  padding-top: 0.5em;
   font-size: 18px;
   display: block;
   line-height: 1;
@@ -4758,6 +4759,12 @@ sub, sup {
   line-height: 1;
   color: #fff;
   margin-top: 10px
+}
+
+.page-header .site-back-home {
+  text-align: left;
+  font-size: 18px
+  color: #fff
 }
 
 @media only screen and (min-width:550px) {
