@@ -4729,7 +4729,7 @@ sub, sup {
 .footer a {
   text-decoration: none;
   margin: 0;
-  color: #fff
+  color: #fff;
 }
 
 .page-header {
@@ -4741,7 +4741,7 @@ sub, sup {
   left: 10%;
   margin: 0 auto;
   -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%);
 }
 
 .page-header .site-title {
@@ -4749,7 +4749,7 @@ sub, sup {
   font-size: 18px;
   display: block;
   line-height: 1;
-  color: #fff
+  color: #fff;
 }
 
 
@@ -4758,25 +4758,25 @@ sub, sup {
   display: block;
   line-height: 1;
   color: #fff;
-  margin-top: 10px
+  margin-top: 10px;
 }
 
 .page-header .site-back-home {
   text-align: left;
-  font-size: 18px
-  color: #fff
+  font-size: 18px;
+  color: #fff;
 }
 
 @media only screen and (min-width:550px) {
   .page-header .site-title {
     margin: 0;
-    font-size: 36px
+    font-size: 36px;
   }
 }
 
 @media only screen and (min-width:550px) {
   .page-header .site-description {
-    font-size: 18px
+    font-size: 18px;
   }
 }
 
