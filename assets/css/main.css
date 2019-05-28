@@ -4732,18 +4732,14 @@ sub, sup {
   color: #fff;
 }
 
-
-
 .page-header {
-  justify-content: space-between;
   z-index: 1;
   color: #fff;
   position: fixed;
   top: 10%;
   left: 10%;
   margin: 0 auto;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  width: 80%;
 }
 
 .page-header .site-title {
