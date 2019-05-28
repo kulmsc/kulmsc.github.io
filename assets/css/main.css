@@ -4732,9 +4732,12 @@ sub, sup {
   color: #fff;
 }
 
+.page-header-container {
+  justify-content: center;
+}
+
 .page-header {
   z-index: 1;
-  text-align: left;
   color: #fff;
   position: fixed;
   top: 10%;
@@ -4745,6 +4748,7 @@ sub, sup {
 }
 
 .page-header .site-title {
+  text-align: left;
   padding-top: 0.5em;
   font-size: 18px;
   display: block;
@@ -4752,8 +4756,8 @@ sub, sup {
   color: #fff;
 }
 
-
 .page-header .site-description {
+  text-align: left;
   font-size: 12px;
   display: block;
   line-height: 1;
@@ -4762,7 +4766,7 @@ sub, sup {
 }
 
 .page-header .site-back-home {
-  text-align: left;
+  text-align: right;
   font-size: 18px;
   color: #fff;
 }
