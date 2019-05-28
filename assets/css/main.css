@@ -4736,7 +4736,6 @@ sub, sup {
   z-index: 1;
   color: #fff;
   position: fixed;
-  top: 10%;
   left: 10%;
   margin: 0 auto;
   width: 80%;
@@ -4765,6 +4764,10 @@ sub, sup {
   font-size: 18px;
   color: #fff;
   display: block;
+}
+
+.page-header .site-back-home a {
+  color: hotpink;
 }
 
 @media only screen and (min-width:550px) {
