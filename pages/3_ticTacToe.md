@@ -11,24 +11,25 @@ Tic Tac Toe is a great game, it involves stratgey, luck and excitement while sti
 <table style="margin: 0px auto;">
   <tr>
     <td>
-      <h1>RICHIE RICH</h1>
+      <h1>
+	<a href="https://kulmsc.github.io/ticTacToe/python">
+    	  Python
+	</a>
+      </h1>
     </td>
     <td>
-      <h1>MeDIUM MAC</h1>
+      <h1>
+	<a href="https://kulmsc.github.io/ticTacToe/R">
+          R
+        </a>
+      </h1>
     </td>
     <td>
-      <h1>OLD JEANS</h1>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <p>seems like ur born with a golden spoon</p>
-    </td>
-    <td>
-      <p>nor single screen or multiplex</p>
-    </td>
-    <td>
-      <p>did u check ur old jeans yet</p>
+      <h1>
+	<a href="https://kulmsc.github.io/ticTacToe/julia">
+          Julia
+        </a>
+      </h1>
     </td>
   </tr>
 </table>
