@@ -30,13 +30,13 @@ On each programming language main page I briefly discuss my percieved strengths 
   </tr>
   <tr>
     <td style="padding:0 15px 0 15px;">
-      <a href="https://kulmsc.github.io/ticTacToe/python/v1"> Python-V1 </a>
+      <a href="https://kulmsc.github.io/ticTacToe/python/pythonV1"> Python-V1 </a>
     </td>
     <td style="padding:0 15px 0 15px;">
-      <a href="https://kulmsc.github.io/ticTacToe/R/v1"> R-V1 </a>
+      <a href="https://kulmsc.github.io/ticTacToe/R/RV1"> R-V1 </a>
     </td>
     <td style="padding:0 15px 0 15px;">
-      <a href="https://kulmsc.github.io/ticTacToe/julia/v1"> Julia-V1 </a>
+      <a href="https://kulmsc.github.io/ticTacToe/julia/juliaV1"> Julia-V1 </a>
     </td>
   </tr>
 </table>

@@ -5,3 +5,5 @@ permalink: /ticTacToe/python
 ---
 
 # Tic Tac Toe - Python
+
+Python is a 
