@@ -1,7 +1,7 @@
 ---
 layout: page
 title: tictacToe
-permalink: /ticTactoe/
+permalink: /ticTacToe/
 ---
 
 # ticTacToe
