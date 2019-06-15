@@ -4729,47 +4729,59 @@ sub, sup {
 .footer a {
   text-decoration: none;
   margin: 0;
-  color: #fff
+  color: #fff;
 }
 
 .page-header {
   z-index: 1;
-  text-align: left;
   color: #fff;
   position: fixed;
-  top: 10%;
   left: 10%;
   margin: 0 auto;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%)
+  width: 80%;
 }
 
 .page-header .site-title {
+  text-align: left;
+  padding-top: 0.5em;
   font-size: 18px;
   display: block;
   line-height: 1;
-  color: #fff
+  color: #fff;
 }
 
-
 .page-header .site-description {
+  text-align: left;
   font-size: 12px;
   display: block;
   line-height: 1;
   color: #fff;
-  margin-top: 10px
+  margin-top: 10px;
+}
+
+.page-header .site-back-home {
+  text-align: right;
+  font-size: 18px;
+  color: #fff;
+  display: block;
+}
+
+.page-header .site-back-home a {
+  color: black;
+  background-color: white;
+  text-decoration: NONE;
 }
 
 @media only screen and (min-width:550px) {
   .page-header .site-title {
     margin: 0;
-    font-size: 36px
+    font-size: 36px;
   }
 }
 
 @media only screen and (min-width:550px) {
   .page-header .site-description {
-    font-size: 18px
+    font-size: 18px;
   }
 }
 
