@@ -12,10 +12,11 @@ As I am trying to increase my data science skills there are two obvious choices:
 
 To further ease the learning of these languages I will be writing multiple versions of each program.  As each version progresses it will grow in coding and strategy complexity.  However, to ease in translating each version will maintain the same pseudocode or template and differ in syntax.  All of the pseudocode can be found on this page and the specific code is broken down further on the language specific pages (listed directly below).  Hopefully everything is clear, now let's get to the code:
 
-
+<div style="text-align: right"> your-text-here
 ## The Languages
+</div>
 
-<div class="header-links">
+<div class="ticTacToe-links">
   <a class="link" href="yahoo.com">About Me</a>
   <a class="link" href="google.com">Projects</a>
 </div>
