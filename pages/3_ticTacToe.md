@@ -12,32 +12,21 @@ As I am trying to increase my data science skills there are two obvious choices:
 
 To further ease the learning of these languages I will be writing multiple versions of each program.  As each version progresses it will grow in coding and strategy complexity.  However, to ease in translating each version will maintain the same pseudocode or template and differ in syntax.  All of the pseudocode can be found on this page and the specific code is broken down further on the language specific pages (listed directly below).  Hopefully everything is clear, now let's get to the code:
 
-<div style="text-align: right"> <h1> Featured Projects </h1> </div>
+<div style="text-align: left"> <h2> Languages </h2> </div>
 
 <div class="ticTacToe-links">
-  <a class="link" href="yahoo.com">About Me</a>
-  <a class="link" href="google.com">Projects</a>
+  <a class="link" href="https://kulmsc.github.io/ticTacToe/python">Python</a>
+  <a class="link" href="https://kulmsc.github.io/ticTacToe/R">R</a>
+	<a class="link" href="https://kulmsc.github.io/ticTacToe/juli">Julia</a>
+</div>
+
+<div style="text-align: left"> <h2> Versions </h2> </div>
+
+<div class="ticTacToe-links">
+  <a class="link" href="www.yahoo.com">About Me</a>
+  <a class="link" href="www.google.com">Projects</a>
 </div>
 
 
-<table style="margin: 0px auto;">
-  <tr>
-    <td style="padding:0 25px 0 15px;">
-      <h1>
-	<a href="https://kulmsc.github.io/ticTacToe/python"> Python </a>
-      </h1>
-    </td>
-    <td style="padding:0 25px 0 15px;">
-      <h1>
-	<a href="https://kulmsc.github.io/ticTacToe/R"> R </a>
-      </h1>
-    </td>
-    <td style="padding:0 25px 0 15px;">
-      <h1>
-	<a href="https://kulmsc.github.io/ticTacToe/julia"> Julia </a>
-      </h1>
-    </td>
-  </tr>
-</table>
 
 ## Version 1

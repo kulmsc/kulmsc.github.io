@@ -4515,14 +4515,14 @@ sub, sup {
 }
 
 .ticTactoe-links {
-  margin: 10px
+  margin: 30px
 }
 
 .ticTacToe-links .link {
   color: #000;
   text-decoration: none;
-  font-size: 35px;
-  margin: 20px
+  font-size: 25px;
+  margin: 30px
 }
 
 @media only screen and (min-width:550px) {
