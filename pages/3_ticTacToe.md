@@ -12,7 +12,9 @@ As I am trying to increase my data science skills there are two obvious choices:
 
 To further ease the learning of these languages I will be writing multiple versions of each program.  As each version progresses it will grow in coding and strategy complexity.  However, to ease in translating each version will maintain the same pseudocode or template and differ in syntax.  All of the pseudocode can be found on this page and the specific code is broken down further on the language specific pages (listed directly below).  Hopefully everything is clear, now let's get to the code:
 
+<div class="ticTacToe-header">
 <div style="text-align: left"> <h2> Languages </h2> </div>
+</div>
 
 <div class="ticTacToe-links">
   <a class="link" href="https://kulmsc.github.io/ticTacToe/python">Python</a>
@@ -20,13 +22,20 @@ To further ease the learning of these languages I will be writing multiple versi
 	<a class="link" href="https://kulmsc.github.io/ticTacToe/juli">Julia</a>
 </div>
 
+<div class="ticTacToe-header">
 <div style="text-align: left"> <h2> Versions </h2> </div>
+</div>
 
 <div class="ticTacToe-links">
-  <a class="link" href="www.yahoo.com">About Me</a>
-  <a class="link" href="www.google.com">Projects</a>
+  <a class="link" href="#one" data-scroll>One</a>
+	<a class="link" href="#two" data-scroll>Two</a>
 </div>
 
 
+<section id="one">
+## Version One
+</section>
 
-## Version 1
+<section id="two">
+## Version Two
+</section>

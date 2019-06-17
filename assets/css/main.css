@@ -4518,6 +4518,10 @@ sub, sup {
   margin: 30px
 }
 
+.ticTactoe-header {
+  margin: 10px
+}
+
 .ticTacToe-links .link {
   color: #000;
   text-decoration: none;
