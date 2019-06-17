@@ -33,9 +33,9 @@ To further ease the learning of these languages I will be writing multiple versi
 
 
 <section id="one">
-## Version One
+Version One
 </section>
 
 <section id="two">
-## Version Two
+Version Two
 </section>
