@@ -19,7 +19,7 @@ To further ease the learning of these languages I will be writing multiple versi
 <div class="ticTacToe-links">
   <a class="link" href="https://kulmsc.github.io/ticTacToe/python">Python</a>
   <a class="link" href="https://kulmsc.github.io/ticTacToe/R">R</a>
-	<a class="link" href="https://kulmsc.github.io/ticTacToe/julia">Julia</a>
+  <a class="link" href="https://kulmsc.github.io/ticTacToe/julia">Julia</a>
 </div>
 
 <div class="ticTacToe-header">
