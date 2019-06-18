@@ -39,7 +39,19 @@
 
 <p>In this section I will attempt to derive the LDPred method for shrinking GWAS effect sizes so they may be used in polygenic risk scoring.  In this process I will mention other papers that use Bayes Law to estimate the posterior GWAS effect size.  The <a href="https://www.cell.com/action/showPdf?pii=S0002-9297%2815%2900365-1">paper</a> has its own derivation, however I found that many steps were missed or even wrong.  Please contact me if you find any errors within this derivation.</p>
 
-<h2 id="no-ld---infintesimal">No LD - Infintesimal</h2>
+<div class="ticTacToe-header">
+<div style="text-align: left"> <h2> Sections </h2> </div>
+</div>
+
+<div class="ticTacToe-links">
+  <a class="link" href="#foundations" data-scroll="">Foundations</a>
+  <a class="link" href="#noLD-Infintesimal" data-scroll="">No LD - Infintesimal</a>
+</div>
+
+<div class="vertical-space"></div>
+<section id="foundations">
+</section>
+<h2 id="foundations">Foundations</h2>
 
 <h3 id="calculate-estimated-beta">Calculate Estimated Beta</h3>
 
@@ -96,6 +108,12 @@
 <p>Putting both pieces together our final distribution is:</p>
 
 <script type="math/tex; mode=display">\tilde{\beta_i} \sim N(\beta_i,\frac{1-\frac{h^2}{M}}{N})</script>
+
+<div class="vertical-space"></div>
+<section id="noLD-Infintesimal">
+</section>
+
+<h2 id="no-ld---infintesimal">No LD - Infintesimal</h2>
 
 <h3 id="calculate-posterior-beta">Calculate Posterior Beta</h3>
 

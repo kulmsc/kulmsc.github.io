@@ -28,7 +28,7 @@ To further ease the learning of these languages I will be writing multiple versi
 
 <div class="ticTacToe-links">
   <a class="link" href="#one" data-scroll>One</a>
-	<a class="link" href="#two" data-scroll>Two</a>
+  <a class="link" href="#two" data-scroll>Two</a>
 </div>
 
 <div class="vertical-space"></div>
