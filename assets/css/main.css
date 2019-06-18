@@ -4758,6 +4758,7 @@ sub, sup {
   left: 10%;
   margin: 0 auto;
   width: 80%;
+  top: -20px;
 }
 
 .page-header .site-title {
@@ -4782,8 +4783,9 @@ sub, sup {
   color: #fff;
   text-decoration: none;
   font-size: 25px;
-  margin: 30px
   text-align: right;
+  display: inline-block;
+  width: 100%;
 }
 
 /*
