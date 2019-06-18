@@ -4519,7 +4519,7 @@ sub, sup {
 }
 
 .ticTacToe-header {
-  margin: 10px
+  margin-left: 250px
 }
 
 .ticTacToe-links .link {
@@ -4750,7 +4750,7 @@ sub, sup {
 .page-header {
   z-index: 1;
   color: #fff;
-  position: fixed;
+  position: absolute;
   left: 10%;
   margin: 0 auto;
   width: 80%;
@@ -4781,11 +4781,13 @@ sub, sup {
   display: block;
 }
 
+/*
 .page-header .site-back-home a {
   color: black;
   background-color: white;
   text-decoration: NONE;
 }
+*/
 
 @media only screen and (min-width:550px) {
   .page-header .site-title {
