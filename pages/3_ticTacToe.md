@@ -36,7 +36,7 @@ To further ease the learning of these languages I will be writing multiple versi
 <section id="one">
 </section>
 
-##Version One
+## Version One
 
 I am continuing to write about verion one
 new line new line.
@@ -47,6 +47,6 @@ new line new line.
 <section id="two">
 </section>
 
-##Version Two
+## Version Two
 
 I still have to work on this.
