@@ -4747,6 +4747,10 @@ sub, sup {
   color: #fff;
 }
 
+.vertical-space {
+  height: 50px
+}
+
 .page-header {
   z-index: 1;
   color: #fff;

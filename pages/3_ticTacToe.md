@@ -31,11 +31,22 @@ To further ease the learning of these languages I will be writing multiple versi
 	<a class="link" href="#two" data-scroll>Two</a>
 </div>
 
+<div class="vertical-space"></div>
 
 <section id="one">
-Version One
 </section>
 
+##Version One
+
+I am continuing to write about verion one
+new line new line.
+
+
+<div class="vertical-space"></div>
+
 <section id="two">
-Version Two
 </section>
+
+##Version Two
+
+I still have to work on this.
