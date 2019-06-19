@@ -4869,6 +4869,14 @@ sub, sup {
     color: white;
 }
 
+.codeBlockNEW {
+    text-align: left;
+    width: 50%;
+    margin: auto;
+    background-color: black;
+    color: white;
+}
+
 
 .forMarkdown {
      margin: auto;
