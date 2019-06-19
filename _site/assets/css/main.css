@@ -4860,6 +4860,13 @@ sub, sup {
   background-attachment: fixed
 }
 
+
+.codeBlock {
+    align: left;
+    padding: 50px;
+}
+
+
 .forMarkdown {
      margin: auto;
      text-align: center;
