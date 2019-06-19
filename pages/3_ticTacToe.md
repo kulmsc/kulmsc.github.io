@@ -3,6 +3,7 @@ layout: page
 title: ticTacToe
 permalink: /ticTacToe/
 ---
+{::options parse_block_html="true" /}
 
 # Tic Tac Toe Three Ways
 
@@ -40,6 +41,7 @@ To further ease the learning of these languages I will be writing multiple versi
 
 Coming from the understanding that you have some knowlege, even if slight, on writing code, I will begin with the assumption that the program should be built around a set of functions.  The core or obvious functions we will need include getting the next play for a human, and the next play for the computer.  These two functions will alternate back and forth passing the board they both play on.  To make sure the game does not go on forever, we should have another function that checks whether someone has won.  With all of this in mind a pseudocode for the game may look like:
 
+<div align="left">
 ````
 get some information
 while no one has won
@@ -48,6 +50,7 @@ while no one has won
   won = check victory
 say who wins
 ````
+</div>
 
 
 
