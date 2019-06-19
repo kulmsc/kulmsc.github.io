@@ -4863,7 +4863,10 @@ sub, sup {
 
 .codeBlock {
     text-align: left;
-    padding: 50px;
+    width: 50%;
+    margin: auto;
+    background-color: black;
+    color: white;
 }
 
 

@@ -85,7 +85,7 @@ say who wins
 
 <p>Focusing on the while loop, for practicality purposes we may notice it would be nice to see the board.  Going by the adage if you do something more than twice in coding you should write a function for it, a print board function would save some time and just be good organization.  The final function applies to the top section of getting information.  For each piece of information we need there may be some data types that throw off the code, therefore we should have a function to make sure what the sure inputs is actually what we want.  If the user gives us something we do not like we call the function again, otherwise we simply return.  The pseudocode would be:</p>
 
-<div align="left">
+<div class="codeBlock">
   <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>checkInput (message, allowedInputs)
   print message
   input = ask user for input
@@ -101,7 +101,7 @@ say who wins
 
 <p>In the beginning it would also be nice to explain the rules.  For simplicity we will use a grid method to determine where you go, meaning 1 refers to the upper left corner, 5 is the middle, and 9 is bottom right.  We should print the board explaining this methodology.  The code now is:</p>
 
-<div align="left">
+<div class="codeBlock">
   <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>State introductions
 name = checkInput("what is your name", anything goes)
 humanSymbol = checkInput("What is your symbol", "X" or "O")
@@ -132,7 +132,7 @@ say who wins
 
 <p>It looks like we are almost there!  The final steps are to actually specify  what the humanPlay, comPlay and checkVictory look like.  The humanPlay is basically the checkInput function, but we have to first determine which board spaces are empty.  Since this is the first version the comPlay function is just a random number generator.  In each play function, after we get a valid position we have to translate the grid number to row and column indicies and change the space on the board to the respective symbol.  The checkVictory function is a little trickier.  We have to define all possible victory combinations and then check to see if any one symbol is on a board in a way that fulfills one of these combinations.  In pseudocode we have:</p>
 
-<div align="left">
+<div class="codeBlock">
   <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>humanPlay(board, symbol)
   playPosition = checkInput("where do you go", 1 to 9)
   rowPosition = playPosition to row
