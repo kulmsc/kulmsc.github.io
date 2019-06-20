@@ -5,3 +5,9 @@ permalink: /ticTacToe/julia
 ---
 
 # Tic Tac Toe - Julia
+
+Julia is the brand new language that is coming on fast, mainly because of its claim that it can be as easy to code as Python while being as fast as C.  This was the objective as it was being created at least, at the recent year of 2009.  Beyond the speed focus, Julia has been written as a numerical language that has a unique type system, which to the best of my reasoning means that you can declare a variable and then use it through various notations.  While the recent invention of this language makes it shiny and fast, this lack of use is also Julia's biggest downside.  If you go on Stack Exchange, there are not many Julia questions or if you want to read a book it is difficult to find a guide.  This will likely change in the future however, as it seems like more organizations and schools are catching on.
+
+As I am actively learning this language while I go through this exercise I may not be the best to suggest learning mediums.  Although, I have been reading [Think Julia](https://benlauwens.github.io/ThinkJulia.jl/latest/book.html) which has been an easy-read yet extensive.  There are also many great videos offered on Julia's [website](https://julialang.org/learning/) that are worth a view or two.
+
+Or, as always! You can read my code.  I have broke them down into the various versions mentioned on the [main tic tac toe page](https://kulmsc.github.io/ticTacToe/).  Descriptions of syntax and logic abound (hopefully!). 
