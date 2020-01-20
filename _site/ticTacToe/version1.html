@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ticTacToe Version 1</title>
+  <meta name="description" content="Posting ground for my projects and musings within grad school (and hopefully beyond!)">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+  <body>
+      <section id="page_header">
+        <div class="shortParticle">
+<div id="particles-js">
+  <div class="page-header">
+      <h1>
+        <span class="site-title">Scott Kulm</span>
+        <span class="site-description">Graduate Student</span>
+	<!-- span class="site-back-home"><a href="https://kulmsc.github.io">Home</a></span> -->
+	 <a class="site-back-home" href="https://kulmsc.github.io">Home</a>
+      </h1>
+  </div>
+</div>
+</div>
+
+      </section>
+    <div class="forMarkdown">
+      
+<h1 id="version-1">Version 1</h1>
+
+<div class="ticTacToe-links">
+  <p><a class="link" href="https://kulmsc.github.io/ticTacToe/version1/python">Version 1</a>
+  <a class="link" href="https://kulmsc.github.io/ticTacToe/version1/R">Version 1</a>
+  <a class="link" href="https://kulmsc.github.io/ticTacToe/version1/julia">Version 1</a></p>
+</div>
+
+<h3 id="basic-outline">Basic Outline</h3>
+
+<p>Coming from the understanding that you have some knowledge, even if slight, on writing code, I will begin with the assumption that the program should be built around a set of functions.  The core or obvious functions we will need include getting the next play for a human, and the next play for the computer.  These two functions will alternate back and forth passing the board they both play on.  To make sure the game does not go on forever, we should have another function that checks whether someone has won.  With all of this in mind a pseudocode for the game may look like:</p>
+
+<div class="codeBlock">
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>get some information
+while no one has won
+  board = have human/computer play (board)
+  switch who plays
+  won = check victory
+say who wins
+</code></pre></div>  </div>
+</div>
+
+<h3 id="starting-information">Starting Information</h3>
+
+<p>Let’s break this down, starting from the top. We will want a series of information before we start the game, such as who goes first, what are the players names and a few other things.  Following the addage that if you do something in coding more than once you should write a function, we should likely write a function that gets the nescessary information.  This function will not only want to ask a question that prompts the player for the correct input, and return the input to the larger game, but also to make sure the input is the right type.  For instance if we want to know if the player wants to be X or O, and they return 123, that would be a problem.  So we will make sure the input is within a pre-specified range of values.  Putting this all together:</p>
+
+<div class="codeBlock">
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>checkInput (message, allowedInputs)
+  print message
+  input = ask user for input
+  if input in allowedInputs
+    return input
+  else
+    checkInput(message, allowedInputs)
+
+</code></pre></div>  </div>
+</div>
+
+<p>The main pseudocode can now be expanded in the get information department.  Specifically we need to get the user’s name, get the players’ symbols, and decide who will go first.  Specifically we will decide who goes first by flipping a virtual coin.  If the guessed call matches a randomly flipped call then the human goes first, otherwise the computer does.  We will also set up an alias variable, that takes the value of whichever symbol and function is currently playing.  This way we don’t have to have a bunch of if statements, only a change of variable.  This last part may seem confusing, but should make sense once it is put into practice.</p>
+
+<div class="codeBlock">
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>State introductions
+name = checkInput("what is your name", anything goes)
+humanSymbol = checkInput("What is your symbol", "X" or "O")
+comSymbol = opposite of humanSymbol
+calledFlip = checkInput("We flip coin to see who goes first, you call", "H" or "T")
+randomFlip = randomFlipGenerator()
+if calledFlip == randomFlip
+  playFunc = humanPlay
+  playSymbol = humanSymbol
+else
+  playFunc = comPlay
+  playSymbol = comSymbol
+State who is going first
+
+</code></pre></div>  </div>
+</div>
+
+<p>In the beginning it would also be nice to explain the rules.  For simplicity we will use a grid method to determine where you go, meaning 1 refers to the upper left corner, 5 is the middle, and 9 is bottom right.  We should print the board explaining this methodology.  Thinking forward, printing the board is something that we will likely want to do often, so once again we should write a function.  This function will take in a lis, whose elements are the things to be printed in each section of the board, and the function will output the printer board.  A simple function really.  The code now is:</p>
+
+<div class="codeBlock">
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>printBoard (currentBoard)
+  print currentBoard[1] "|" currentBoard[2] "|" currentBoard[3]
+  print "__________"
+  print currentBoard[4] "|" currentBoard[5] "|" currentBoard[6]
+  print "__________"
+  print currentBoard[7] "|" currentBoard[8] "|" currentBoard[9]
+</code></pre></div>  </div>
+</div>
+
+<p>Pretty simple I know, but this is the first version.  Now moving onto the actual use of this function.  We can create a model board which is just a list of 1, 2, …, 9.  Print it, explain the rules, and finally create an empty board which will later be filled in with X or O.</p>
+
+<div class="codeBlock">
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>modelBoard = create model board
+explain rules
+printBoard(modelBoard)
+board = create empty board
+
+... onto the gameplay!
+</code></pre></div>  </div>
+</div>
+
+<h3 id="the-playing-functions">The Playing Functions</h3>
+
+<p>It looks like we are almost there!  The final steps are to actually specify  what the humanPlay, comPlay and checkVictory look like.  The humanPlay is basically an application of the checkInput function, where we ask the human where they want to play.  Although in the application of this function  we first have to determine which board spaces are empty.  We do that by getting any input  and then checking if the board at the input position is filled or empty.  If empty we place the human player’s symbol, and if taken we loop to the top and ask the human to try again.</p>
+
+<p>I should note that this idea of using a function, within the same function is called recursion.  It is a powerful technique that if seems confusing can be thought of as a while loop that goes around the entire function.  While the play position is not in the available sets, then run the function again.  When the return statement is finally met, then the function goes up all of the steps originally made downward in function calls.  There are many better descriptors of recursion elsewhere, so if you are still confused don’t stop here.</p>
+
+<div class="codeBlock">
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>humanPlay(board, symbol)
+  playPosition = checkInput("where do you go", 1 to 9)
+  if board at playPosition is empty
+    board at playPosition = symbol
+  else
+    print "that space is taken"
+    humanPlay(board, symbol)
+</code></pre></div>  </div>
+</div>
+
+<p>Since this is the first version the comPlay function is just a random number generator.  The rest of the function loops very similarly to the human play function.</p>
+
+<div class="codeBlock">
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>comPlay(board, symbol)
+  playPosition = random number from 1 to 9
+  if board at playPosition is empty
+    board at playPosition = symbol
+  else
+    comPlay(board, symbol)
+</code></pre></div>  </div>
+</div>
+
+<h3 id="onto-victory">Onto Victory</h3>
+
+<p>The checkVictory function is a little trickier.  We have to define all possible victory combinations and then check to see if any one symbol is on a board in a way that fulfills one of these combinations.  In pseudocode we have:</p>
+
+<div class="codeBlock">
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  checkVictory(board, symbol)
+    victorySets = define all grid positions that give victory
+    currentPositions = get current positions of board by symbol
+    if any currentPositions are in victorySets
+      return True
+    else
+      return False
+</code></pre></div>  </div>
+</div>
+
+<p>And that’s it!  The last thing to do is announce the winner, although that’s so simple the pseudocode would be rather meaningless.</p>
+
+<p>There are a few things that could be changed for simplicity and readability, such as making more functions, but I believe this is an intuitive way to think about tic tac toe and therefore a good starting place for this project.</p>
+
+<div class="vertical-space"></div>
+
+<section id="two"></section>
+
+<h2 id="version-two">Version Two</h2>
+
+<p>I still have to work on this.</p>
+
+    </div>
+
+      </div>
+      <footer class="footer">
+    <p>&copy; Scott Kulm</p>
+    <p>Build with Jekyll and <span class="love">❤</span> by <a href="https://github.com/nrandecker">Nathan Randecker</a></p>
+</footer>
+<script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="/assets/js/sweet-scroll.min.js"></script>
+<script src="/assets/js/main.js"></script>
+<!-- Google Analytics -->
+
+<script>
+var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+if (dnt != "1" && dnt != "yes") {
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', '', 'auto');
+ga('send', 'pageview');
+}
+</script>
+
+
+
+  </body>

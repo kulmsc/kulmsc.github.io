@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>R</title>
+  <meta name="description" content="Posting ground for my projects and musings within grad school (and hopefully beyond!)">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+  <body>
+      <section id="page_header">
+        <div class="shortParticle">
+<div id="particles-js">
+  <div class="page-header">
+      <h1>
+        <span class="site-title">Scott Kulm</span>
+        <span class="site-description">Graduate Student</span>
+	<!-- span class="site-back-home"><a href="https://kulmsc.github.io">Home</a></span> -->
+	 <a class="site-back-home" href="https://kulmsc.github.io">Home</a>
+      </h1>
+  </div>
+</div>
+</div>
+
+      </section>
+    <div class="forMarkdown">
+      <h2 id="version-one">Version One</h2>
+
+<p>Going sequentially through the order of the play the first steps of the game are introductions.  The R language provides a nice function ifelse, which provides a clear, one-liner to pick from two possibilities.  The next unique R function is rbinom, used within the coin flip step, which is a built-in function among many other probability distributions.  The last R-specific piece of syntax to point out in the introduction, is the data-type matrix which allows for an easy and intuitive representation of the board.</p>
+
+<p>As we begin the looping play, we get to the com and human play functions.  The human function is more advanced, so we shall examine it:</p>
+
+<div class="codeBlock">
+````r
+humanPlay &lt;- function(board, symbol = playerSymbol){
+  playPosition &lt;- as.numeric(checkInput("It is your turn, where will you go: ",1:9))
+  rowPos &lt;- ceiling(playPosition/3)
+  colPos &lt;- ifelse(playPosition %% 3 == 0, 3, playPosition %% 3)
+  if(board[rowPos,colPos] != " "){
+    print("That space is taken, please try again")
+    return(humanPlay(board))
+  } else {
+    board[rowPos,colPos] &lt;- symbol
+    return(board)
+  }
+}
+````
+</div>
+
+<p>Reading from top to bottom, we see the checkInput function as previously described.  However, wrapping the function is the as.numeric function, a notation commonly used within R to convert one data type to another.  Moving onto the conversion of the board to available row and column coordinates we again see examples of the concise R syntax, %% for modulo, ifelse, and ceiling.  These two positions are then used to subset the board matrix.  While I admit that there would have been more efficient ways to go from matrix to empty locations, these commands were chosen so they would mirror the Python and Julia programs.</p>
+
+<p>The comPlay function is similar yet simpler than humanPlay.  The only other function is checkVictory, which is worth analyzing:</p>
+
+<div class="codeBlock">
+````r
+checkVictory &lt;- function(board, symbol){
+  victorySets &lt;- rbind(c(1,2,3),c(4,5,6),c(7,8,9),
+                       c(1,4,7),c(2,5,8),c(3,6,9),
+                       c(1,5,9),c(3,5,7))
+  vectorBoard &lt;- as.character(t(currentBoard))
+  spots &lt;- which(vectorBoard == symbol)
+  wins &lt;- any(apply(victorySets,1,function(x) all(x %in% spots)))
+  return(wins)
+}
+````
+</div>
+
+<p>The first line is the standard recording of victorySets.  The second line is more interesting, we see the as.x notation to convert data types.  While I am unsure of the deeper reasonings, this conversion will produce a vector instead of a matrix.  On the next line is a very common function, which, that converts a boolean vector into numeric vector of where the truths are. The last line is the all-important apply function, which as suggests applies a function to each row or column of a matrix.  Not only does the function save line space, but it also can speed up operations considerabely.  The function we apply in this case is to check whether the possible victorySet is  within the vectorizd board.  The wrapping function will convert this boolean vector into a single boolean if any elements are true, a common function in many languages.  If this function does return true the game will end and the values of the playName are used to determine who should be congratulated.</p>
+
+    </div>
+
+      </div>
+      <footer class="footer">
+    <p>&copy; Scott Kulm</p>
+    <p>Build with Jekyll and <span class="love">❤</span> by <a href="https://github.com/nrandecker">Nathan Randecker</a></p>
+</footer>
+<script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="/assets/js/sweet-scroll.min.js"></script>
+<script src="/assets/js/main.js"></script>
+<!-- Google Analytics -->
+
+<script>
+var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+if (dnt != "1" && dnt != "yes") {
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', '', 'auto');
+ga('send', 'pageview');
+}
+</script>
+
+
+
+  </body>

@@ -4863,7 +4863,7 @@ sub, sup {
 
 .codeBlock {
     text-align: left;
-    width: 50%;
+    width: 80%;
     margin: auto;
     background-color: black;
     color: white;
@@ -4883,6 +4883,6 @@ sub, sup {
      line-height: 25px;
      margin-top: 50px;
      margin-bottom: 100px;
-     margin-right: 250px;
-     margin-left: 250px;
+     margin-right: 400px;
+     margin-left: 400px;
  }

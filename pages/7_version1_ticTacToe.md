@@ -1,0 +1,162 @@
+---
+layout: page
+title: ticTacToe Version 1
+permalink: /ticTacToe/version1
+---
+{::options parse_block_html="true" /}
+
+# Version 1
+
+<div class="ticTacToe-links">
+  <a class="link" href="https://kulmsc.github.io/ticTacToe/version1/python">Version 1</a>
+  <a class="link" href="https://kulmsc.github.io/ticTacToe/version1/R">Version 1</a>
+  <a class="link" href="https://kulmsc.github.io/ticTacToe/version1/julia">Version 1</a>
+</div>
+
+### Basic Outline
+
+Coming from the understanding that you have some knowledge, even if slight, on writing code, I will begin with the assumption that the program should be built around a set of functions.  The core or obvious functions we will need include getting the next play for a human, and the next play for the computer.  These two functions will alternate back and forth passing the board they both play on.  To make sure the game does not go on forever, we should have another function that checks whether someone has won.  With all of this in mind a pseudocode for the game may look like:
+
+<div class="codeBlock">
+````
+get some information
+while no one has won
+  board = have human/computer play (board)
+  switch who plays
+  won = check victory
+say who wins
+````
+</div>
+
+### Starting Information
+
+Let's break this down, starting from the top. We will want a series of information before we start the game, such as who goes first, what are the players names and a few other things.  Following the addage that if you do something in coding more than once you should write a function, we should likely write a function that gets the nescessary information.  This function will not only want to ask a question that prompts the player for the correct input, and return the input to the larger game, but also to make sure the input is the right type.  For instance if we want to know if the player wants to be X or O, and they return 123, that would be a problem.  So we will make sure the input is within a pre-specified range of values.  Putting this all together:
+
+<div class="codeBlock">
+````
+checkInput (message, allowedInputs)
+  print message
+  input = ask user for input
+  if input in allowedInputs
+    return input
+  else
+    checkInput(message, allowedInputs)
+
+````
+</div>
+
+The main pseudocode can now be expanded in the get information department.  Specifically we need to get the user's name, get the players' symbols, and decide who will go first.  Specifically we will decide who goes first by flipping a virtual coin.  If the guessed call matches a randomly flipped call then the human goes first, otherwise the computer does.  We will also set up an alias variable, that takes the value of whichever symbol and function is currently playing.  This way we don't have to have a bunch of if statements, only a change of variable.  This last part may seem confusing, but should make sense once it is put into practice.
+
+
+<div class="codeBlock">
+````
+State introductions
+name = checkInput("what is your name", anything goes)
+humanSymbol = checkInput("What is your symbol", "X" or "O")
+comSymbol = opposite of humanSymbol
+calledFlip = checkInput("We flip coin to see who goes first, you call", "H" or "T")
+randomFlip = randomFlipGenerator()
+if calledFlip == randomFlip
+  playFunc = humanPlay
+  playSymbol = humanSymbol
+else
+  playFunc = comPlay
+  playSymbol = comSymbol
+State who is going first
+
+````
+</div>
+
+
+In the beginning it would also be nice to explain the rules.  For simplicity we will use a grid method to determine where you go, meaning 1 refers to the upper left corner, 5 is the middle, and 9 is bottom right.  We should print the board explaining this methodology.  Thinking forward, printing the board is something that we will likely want to do often, so once again we should write a function.  This function will take in a lis, whose elements are the things to be printed in each section of the board, and the function will output the printer board.  A simple function really.  The code now is:
+
+<div class="codeBlock">
+````
+printBoard (currentBoard)
+  print currentBoard[1] "|" currentBoard[2] "|" currentBoard[3]
+  print "__________"
+  print currentBoard[4] "|" currentBoard[5] "|" currentBoard[6]
+  print "__________"
+  print currentBoard[7] "|" currentBoard[8] "|" currentBoard[9]
+````
+</div>
+
+Pretty simple I know, but this is the first version.  Now moving onto the actual use of this function.  We can create a model board which is just a list of 1, 2, ..., 9.  Print it, explain the rules, and finally create an empty board which will later be filled in with X or O.
+
+
+<div class="codeBlock">
+````
+modelBoard = create model board
+explain rules
+printBoard(modelBoard)
+board = create empty board
+
+... onto the gameplay!
+````
+</div>
+
+
+### The Playing Functions
+
+It looks like we are almost there!  The final steps are to actually specify  what the humanPlay, comPlay and checkVictory look like.  The humanPlay is basically an application of the checkInput function, where we ask the human where they want to play.  Although in the application of this function  we first have to determine which board spaces are empty.  We do that by getting any input  and then checking if the board at the input position is filled or empty.  If empty we place the human player's symbol, and if taken we loop to the top and ask the human to try again.
+
+I should note that this idea of using a function, within the same function is called recursion.  It is a powerful technique that if seems confusing can be thought of as a while loop that goes around the entire function.  While the play position is not in the available sets, then run the function again.  When the return statement is finally met, then the function goes up all of the steps originally made downward in function calls.  There are many better descriptors of recursion elsewhere, so if you are still confused don't stop here.
+
+<div class="codeBlock">
+````
+humanPlay(board, symbol)
+  playPosition = checkInput("where do you go", 1 to 9)
+  if board at playPosition is empty
+    board at playPosition = symbol
+  else
+    print "that space is taken"
+    humanPlay(board, symbol)
+````
+</div>
+
+
+Since this is the first version the comPlay function is just a random number generator.  The rest of the function loops very similarly to the human play function.
+
+<div class="codeBlock">
+````
+comPlay(board, symbol)
+  playPosition = random number from 1 to 9
+  if board at playPosition is empty
+    board at playPosition = symbol
+  else
+    comPlay(board, symbol)
+````
+</div>
+
+
+### Onto Victory
+
+The checkVictory function is a little trickier.  We have to define all possible victory combinations and then check to see if any one symbol is on a board in a way that fulfills one of these combinations.  In pseudocode we have:
+
+
+<div class="codeBlock">
+````
+  checkVictory(board, symbol)
+    victorySets = define all grid positions that give victory
+    currentPositions = get current positions of board by symbol
+    if any currentPositions are in victorySets
+      return True
+    else
+      return False
+````
+</div>
+
+
+
+And that's it!  The last thing to do is announce the winner, although that's so simple the pseudocode would be rather meaningless.
+
+There are a few things that could be changed for simplicity and readability, such as making more functions, but I believe this is an intuitive way to think about tic tac toe and therefore a good starting place for this project.
+
+<div class="vertical-space"></div>
+
+<section id="two">
+</section>
+
+## Version Two
+
+I still have to work on this.
