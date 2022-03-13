@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>model_assumptions</title>
+  <meta name="description" content="Posting ground for my projects and musings within grad school (and hopefully beyond!)">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+  <body>
+      <section id="page_header">
+        <div class="shortParticle">
+<div id="particles-js">
+  <div class="page-header">
+      <h1>
+        <span class="site-title">Scott Kulm</span>
+        <span class="site-description">Graduate Student</span>
+	<!-- span class="site-back-home"><a href="https://kulmsc.github.io">Home</a></span> -->
+	 <a class="site-back-home" href="https://kulmsc.github.io">Home</a>
+      </h1>
+  </div>
+</div>
+</div>
+
+      </section>
+    <div class="forMarkdown">
+      <h1 id="assumptions-of-disease-prediction-models">Assumptions of Disease Prediction Models</h1>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Polygenic risk scores are a completely unknown, and therefore useless, quantity until they are properly evaluated.  These evaluations are completed in the context of a model, for example a comparison of a polygenic risk score against a disease label can be considered an univariate linear regression.  However, there are many factors that may confound a polygenic risk score, which is why most evaluations are multivariate models that contain common risk factors such as age and sex.  Moreover, since disease is often considered an all or nothing affair we can use a logistic regression model, which better handles a binary covariate than a linear regression model.  Now, most investigations of polygenic risk scores stop here and simply use a logistic regression model with a few basic covariates.  However, just as logistic regression is better than linear regression, there are further model modifications we can make to produce a better model.</p>
+
+<p>Although, it is important to note in this process that the descriptions of better, improved or enhanced are all difficult to objectively evaluate.  Which is why we have to both consider the qualitative operation of the model modification and the quantitative effect on the prediction.  While many, many model modifications are possible, we considered modifications that fall into five main catagories of assumptions.  We will analyze these assumptions in turn:</p>
+
+<h2 id="results">Results</h2>
+
+<div class="ticTacToe-header">
+<div style="text-align: left"> <h3> Sections: </h3> </div>
+</div>
+
+<div class="ticTacToe-links">
+  <a class="link" href="#age" data-scroll="">Representation of Age</a>
+  <a class="link" href="#censor" data-scroll="">Manner of Censorship</a>
+</div>
+
+<div class="vertical-space"></div>
+<section id="age">
+</section>
+<h3 id="representation-of-age">Representation of Age</h3>
+
+<div class="vertical-space"></div>
+<section id="censor">
+</section>
+<h3 id="manner-of-censorship">Manner of Censorship</h3>
+
+
+    </div>
+
+      </div>
+      <footer class="footer">
+    <p>&copy; Scott Kulm</p>
+    <p>Build with Jekyll and <span class="love">❤</span> by <a href="https://github.com/nrandecker">Nathan Randecker</a></p>
+</footer>
+<script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="/assets/js/sweet-scroll.min.js"></script>
+<script src="/assets/js/main.js"></script>
+<!-- Google Analytics -->
+
+<script>
+var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+if (dnt != "1" && dnt != "yes") {
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', '', 'auto');
+ga('send', 'pageview');
+}
+</script>
+
+
+
+  </body>
