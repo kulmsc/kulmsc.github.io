@@ -56,7 +56,7 @@ This is a good place to note that the scripts which actually generate and utiliz
 
 The rare pathogenic variants identified are hypothesized to associate with the existence of adverse cardiac conditions.  For simplicity, we will look at only one cardiac condition that is relatively common (and therefore has good statistical power), atrial fibrillation.  We identify each of individual as either having atrial fibrillation or not by their electronic health records, which come in the form of ICD-10 codes.  We therefore have both a matrix of rare, pathogenic genotypes and a vector of phenotypes.  If we were conducting a genome-wide association study we would iterate through each column of our matrix and regress it against the phenotype vector.  As stated earlier (in the introduction) we probably should not do this because the variants are so rare that the regression is under-powered.  We can work around this problem by combining rare variants together according to the gene they fall within.  For example, the first five rare variants identified might all fall into the ABC gene.  We can therefore sum these five variants together into a single ABC pathogenic gene vector and regress it against the phenotype.  This is the exact process we completed, except that the regression we completed was specifically a logistic regression adjusted for many important risk factors, such as age, sex, and BMI.  The strength of the associations are depicted below.
 
-![af genes](/assets/img/genes.af.png)
+![af genes](/assets/img/genes.af.png){ width=50% }
 
 We can directly see that while the pathogenic vectors of most genes fall under the Bonferonni signficance threshold (the horizontal line), two genes do surpass the threshold: TTN and PKP2.  Both of these genes are often mentioned in research articles of cardiac genetics, which makes these findings strong replications of prior results.  
 
@@ -64,8 +64,7 @@ While this initial result suggests that we have picked out a few truly pathogeni
 
  While a nice result, we can go a step further and up the sophistication of our analysis by integrating in many possibly confoudning variables (age, sex, BMI, alcohol, smoking, health history, etc.) and look at the age of onset of atrial fibrillation rather than the simple binary disease status.  This type of analysis is possible with a cox proportional hazard model, which just like a logistic regression model can be multivariate, or consider multiple covariates, and through its survival framework can track the time of each individual until disease or censorship (lost to follow-up).  Unfortunately, this idea was considered a little too complex for my collaborators, so we scrapped the adjustment idea and just went with a Kaplan Meier Curve which tracks the rate of survival of groups over time (just as simple as it seems).  The code we used to do is as follows:
 
-<div class="codeBlock">
-````r
+```r
 #create a survdiff object, which tests the difference between two survival curves
 #in this case the two curves are defined by the pathogenic vector status
 diff <- survdiff(Surv(time_to, primary_pheno) ~ binary_lpv, data = df)
@@ -87,12 +86,11 @@ the_plot <- ggplot(plot_df, aes(time/365, value *100, color = variable)) + geom_
   labs(x = "Time From Enrollment, years", y = paste0("Cumulative Population with ", caplabel, ", %"),
        caption = paste0("P = ", signif(pval, 4)), color = "LPV\nStatus")
 plot(the_plot)
-````
-</div>
+```
 
 The resulting plot actually looks like:
 
-![af km curve](/assets/img/km_diagnosed_fromass.af.png)
+![af km curve](/assets/img/km_diagnosed_fromass.af.png){ width=50% }
 
 We can clearly see that individuals who hold one of the pathogenic variants are significantly more likely to experience atrial fibrillation as compared to individuals without any pathogenic variants.  With this single image our hypothesis is almost confirmed.  We clearly could continue our work to provide for the proper adjustment within the survival analysis, and we could even go further to work on other cardiac conditions.  
 
