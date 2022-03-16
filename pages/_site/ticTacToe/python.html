@@ -1,0 +1,48 @@
+
+<h1 id="tic-tac-toe---python">Tic Tac Toe - Python</h1>
+
+<div class="ticTacToe-links">
+  <p><a class="link" href="https://kulmsc.github.io/ticTacToe/version1/python">Version 1</a></p>
+</div>
+
+<p>From my viewpoint Python is the dominant up and coming language.  It has the advantages of having intuitive syntax with minimal typing while still running at relatively fast speeds.  With the increasing popularity many people having written packages for Python which greatly increase Python’s usability, particularly into the machine learning space.  The only real downside is that Python can require a fair amount of wrapper text at times.  While this claim may seem crazy compared to C or another compiled language, compared to R I believe it holds true.  However, you may prefer this wrapper text for clarity.  In the many online debates I have read on the best data science language, either R or Python, the best argument I have heard is that Python forces you to actually become a competent programmer.  In other words it is hard to write a good Python script over 100 lines and not consider the larger structure of your program.  Therefore, if you are reading this page trying to decide which data science language to focus on I would side with Python, not only for the popularity but the coding competence as well.</p>
+
+<h3 id="learning-resources">Learning Resources</h3>
+
+<p>I started learning Python through the book “Python Programming for the Absolute Beginner”, it worked pretty well for me so I will recommend it further.  I have since read parts of “Thinking Python”, which you can get for free <a href="http://greenteapress.com/thinkpython/thinkpython.pdf">online</a>.  The book goes through the programming mindset, so it might be even better for a programming beginner, but not a Python alone beginner.  There are other websites such as <a href="https://www.learnpython.org/">learnpython.org</a> or <a href="https://www.codecademy.com/learn/learn-python-3">code academy</a> which seem very useful.</p>
+
+<h3 id="software-writing">Software Writing</h3>
+
+<p>Here I will explain anaconda</p>
+
+<h3 id="noteworthy-coding-elements">Noteworthy Coding Elements</h3>
+
+<ol>
+  <li>Basic Notation
+Python is entirely based on indentation.  If you start a loop, then all lines that should be iterated upon need to be indented.  No braces are required, only a colon after the initial loop starting line (don’t forget that colon).  The language you use in the loop should follow common english, rather than any symbols.</li>
+</ol>
+
+<p>The basic data structures within python are the atomic numeric, character, logical; and the more complex list, dictionary, class.  Lists are bounded by [], dictionaries by {} (each element of a dictionary needs a key and an element), and the class looks Similar to a function.</p>
+
+<div class="codeBlock">
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>  </div>
+</div>
+
+<ol>
+  <li>
+    <p>Indexing Trickiness
+For better or worse python starts indexing at 0.  This is fine and all, but in my opinion it can get tricky in regards to the output of other functions.  For example the range(i) function is an iterable that will go from 0 to i-1.</p>
+  </li>
+  <li>
+    <p>List Comprehension
+One of the most python (or uniquely python coding things to do) is list comprehension, or putting a for loop within a list to initialize the list.  You just have to make sure to write the for loop in reverse, with the final list element the first thing you write, and the iterable (for example the range() function) the last thing.</p>
+  </li>
+</ol>
+
+<div class="codeBlock">
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">newList</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span> <span class="c1">#[0, 1, 2]
+</span></code></pre></div>  </div>
+</div>

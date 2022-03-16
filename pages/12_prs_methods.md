@@ -4,6 +4,7 @@ title: prs_methods
 permalink: /prs_methods/
 ---
 
+{::options parse_block_html="true" /}
 
 # Performance of Polygenic Risk Score Adjustment Methods
 
@@ -191,7 +192,7 @@ The aformentioned polygenic risk score methods were applied to data originating 
 
 Most summary statistics were acquired from the GWAS Catalog (https://www.ebi.ac.uk/gwas/downloads/summarystatistics). All studies were sought that had relatively high sample size, studied relatively prevalent, binary, disease traits, contained both minor and major alleles, and did not use UK Biobank data. In total 20 traits were chosen. All summary statistics were downloaded directly from the FTP server. Two additional summary statistics were acquired that were not within the GWAS Catalog. Migraine data from Gormley et al. came from a 23andMe data agreement, and anxiety and schizophrenia data came from the Psychiatric Genetic Consortium through their website (https://www.med.unc.edu/pgc/results-and-downloads).  A brief description of each set of summary statistics utilized in this investigation is provided in table M4.  A conversion script was deployed to regularize the various summary statistics. To only retain the highest quality single nucleotide polymorphisms (SNPs), a set of stringent criteria were assumed. If a SNP broke any of the rules in Table M5 it was removed from the larger summary statistics.  In addition to the quality control, the alleles were either flipped or reversed to match the UK Biobank alleles by utilizing the snp_match function from the bigsnpr function. Lastly, the summary statistics were broken into a set for each chromosome.
 
-![qc rules](/assets/img/table_m5.png)
+![qc rules](/assets/img/table_m5.png) \
 Table M5
 
 
@@ -201,18 +202,19 @@ The UK Biobank is a very large, very well-informed data-set.  Over 500,000 peopl
 
 The UK Biobank imputed data was utilized to adjust summary statistics and create scores.  Individuals not meeting the criteria listed in Table M1 were excluded. Processing of genetic material, except when required by specific adjustment methods, utilized the bgenix and PLINK utilities. The most efficient, and thereby utilized, combination of these utilities started with bgenix to subset the necessary SNPs, PLINK2 to complete additional QC, and PLINK1.9 to complete scoring, clumping or other computations. A final important note should be made that all of the genetic variants described are germline, held in common by nearly every cell in the body. While forms of cancer are discussed, somatic mutations are never utilized.
 
-![ukbb rules](/assets/img/table_m1.png)
+![ukbb rules](/assets/img/table_m1.png) \
 Table M1
 
 ## Adjusting Summary Statistics
 
 The summary statistics for each chromosome and GWAS were adjusted using various methods for the purpose of generating polygenic risk scores. The process of adjusting first requires the adjustment method, 16 of which were utilized in this investigation, all listed in the table at the top of the section.  The various parameters that combined with each method to create the adjusted set of variants.  Second, the set of summary statistics, listed in table M4 and previously quality controlled.  Third, many methods require reference genetic data which often took the form of a small subset of UK Biobank data or alternative sources, namely the 1000 Genomes project.  Fourth, a few methods required additional annotations.  Each of these components were combined following the documentation described at the location the generative method was downloaded from.  If any detail was missing in the documentation, then the accompanying publication was used.  In this manner we did our best to apply each adjustment method exactly as the authors intended it.  Although, we do understand that certain sets of summary statistics were sub-optimal, and the generative methods were not designed for their use.  While the adjustment process varied in the actual adjustment computations, they all shared a beginning preparation step and a finishing step that substituted and/or subset the determined variant effects into the previous, original summary statistics.
 
-![summary statistics](/assets/img/table_m4.png)
-Table M4
+![summary statistics](/assets/img/table_m4.png) \
+<span style="font-family:Arial">Table M4</span>
 
 As I have described so far there is a great deal of code that goes into this scoring process.  While each of the methods have some form of publication and accompanying documentation, there is often times a very large gap between theoretical implementation and practical polygenic risk scores.  For the full description of this process you will need to check out the full code repository, but for an example I will provide a snippet of the code used to execute the clumping method.
 
+<div style="text-align: right">
 ```
 #The clumping file is submitted by a pipeline process
 #The input variables therefore need to be set, as they are here
@@ -231,23 +233,31 @@ cat all_specs/clump_param_specs | tail -n +2 | while read spec;do
   plim=`echo $spec | cut -f1 -d' '`
   r2lim=`echo $spec | cut -f2 -d' '`
 
-  #want to double check that I have not already adjusted the summary statistics with the current set of parameters
+  #want to double check that I have not already adjusted the summary statistics with
+  # the current set of parameters
   if [ ! -e ~/athena/doc_score/mod_sets/${author}/${low_author}.${chr}.clump.${i}.ss ]; then
 
     #this is where the clumping actually happens, all with the PLINK tool
-    #UK Biobank data is contained within the geno_files directly, previously carefully extracted and processed for this purpose
-    plink --memory 4000 --threads 1 --bfile geno_files/${low_author}.${chr} --clump temp_files/ss.${low_author}.${chr} --clump-snp-field RSID --clump-p1 $plim --clump-r2 $r2lim --out ${d}/out
+    #UK Biobank data is contained within the geno_files directly,
+    # previously carefully extracted and processed for this purpose
+    plink --memory 4000 --threads 1 --bfile geno_files/${low_author}.${chr}
+       --clump temp_files/ss.${low_author}.${chr} --clump-snp-field RSID
+       --clump-p1 $plim --clump-r2 $r2lim --out ${d}/out
 
-    #If there were variants that were clumped, I want to extract those variant IDs and use them to subset the entire gwas summary statistics
+    #If there were variants that were clumped, I want to extract those variant IDs and
+    # use them to subset the entire gwas summary statistics
     if [ -f ${d}/out.clumped ]; then
       sed -e 's/ [ ]*/\t/g' ${d}/out.clumped | sed '/^\s*$/d' | cut -f4 | tail -n +2 > ${d}/done_rsids
-      fgrep -w -f ${d}/done_rsids temp_files/ss.${low_author}.${chr} > ~/athena/doc_score/mod_sets/${author}/${low_author}.${chr}.clump.${i}.ss
+      fgrep -w -f ${d}/done_rsids temp_files/ss.${low_author}.${chr} >
+         ~/athena/doc_score/mod_sets/${author}/${low_author}.${chr}.clump.${i}.ss
     fi
   fi
 
   let i=i+1
 done
 ```
+</div>
+
 
 ## Creating Polygenic Risk Scores
 
@@ -260,14 +270,19 @@ While there is less code required to calculate a polygenic risk score than adjus
  cat ../mod_sets/${author}/${ss_name} | cut -f3 > temp_files/rsids.${i}
 
   #pull out the score set of variants from the entire UK Biobank genotypes bgen file
-  bgenix -g ~/athena/ukbiobank/imputed/ukbb.${chr}.bgen -incl-rsids temp_files/rsids.${i} > temp_files/temp.${i}.bgen
+  bgenix -g ~/athena/ukbiobank/imputed/ukbb.${chr}.bgen
+     -incl-rsids temp_files/rsids.${i} > temp_files/temp.${i}.bgen
 
   #convert the bgen file into a PLINK (bed, bim, fam) file type
-  plink2_new --memory 12000 --threads 12 --bgen temp_files/temp.${i}.bgen ref-first --sample ~/athena/ukbiobank/imputed/ukbb.${chr}.sample --keep-fam temp_files/brit_eid --make-bed --out temp_files/geno.${i}
+  plink2_new --memory 12000 --threads 12 --bgen temp_files/temp.${i}.bgen ref-first
+     --sample ~/athena/ukbiobank/imputed/ukbb.${chr}.sample
+     --keep-fam temp_files/brit_eid --make-bed --out temp_files/geno.${i}
   rm temp_files/temp.${i}.bgen
 
   #calculate the polygenic risk score
-  plink --memory 12000 --threads 12 --bfile temp_files/geno.${i} --keep-allele-order --score ../mod_sets/${author}/${ss_name} 3 4 7 sum --out small_score_files/score.${low_author}.${chr}.${ver}.${method}
+  plink --memory 12000 --threads 12 --bfile temp_files/geno.${i} --keep-allele-order
+     --score ../mod_sets/${author}/${ss_name} 3 4 7 sum
+     --out small_score_files/score.${low_author}.${chr}.${ver}.${method}
 
   #compress the polygenic risk score
   zstd --rm small_score_files/score.${low_author}.${chr}.${ver}.${method}.profile
@@ -288,10 +303,14 @@ As I mentioned, this is not the only way to calculate a polygenic risk score.  A
     num_cols=`head -1 big_mod_set | cut -f3-300 | tr '\t' '\n' | wc -l`
 
 #extract the necessary variants from the entire UK Biobank dataset
-    bgenix -g ~/athena/ukbiobank/imputed/ukbb.${chr}.bgen -incl-rsids temp_files/all_rsid > temp_files/temp.bgen
+    bgenix -g ~/athena/ukbiobank/imputed/ukbb.${chr}.bgen
+       -incl-rsids temp_files/all_rsid > temp_files/temp.bgen
 
 #actually calculate the polygenic risk scores
-    plink2_new --memory 12000 --threads 12 --bgen temp_files/temp.bgen ref-first --sample ~/athena/ukbiobank/imputed/ukbb.${chr}.sample --keep-fam temp_files/brit_eid --score big_mod_set 1 2 header-read cols=+scoresums --score-col-nums 3-${num_cols} --out big_small_scores/res.${chr}.${low_author}
+    plink2_new --memory 12000 --threads 12 --bgen temp_files/temp.bgen ref-first
+       --sample ~/athena/ukbiobank/imputed/ukbb.${chr}.sample --keep-fam temp_files/brit_eid
+       --score big_mod_set 1 2 header-read cols=+scoresums --score-col-nums 3-${num_cols}
+       --out big_small_scores/res.${chr}.${low_author}
 
     rm temp_files/temp.bgen temp_files/all_rsid big_mod_set
 
@@ -307,7 +326,7 @@ Within each fold of the cross-validation a logistic regression model was fit to 
 
 Unfortunately, there is a tremendous amont of code that goes into creating this cross validation framework, setting up the proper data frames, and then forming the models and statistics.  There is not even a particularly good snippet to show.  So please, check out the full code repository if you are interested.  The accuracy results, stratified according to method, looks as follows:
 
-![tune heatmap](/assets/img/tune.heatmap.png)
+<img src="/assets/img/tune.heatmap.png" alt="drawing" width="200"/>
 
 Now stratifying across all of the diseases prevents a clear determination on which method is actually working the best.  Which is why we can collapse the disease dimension by simply taking the mean rank.
 

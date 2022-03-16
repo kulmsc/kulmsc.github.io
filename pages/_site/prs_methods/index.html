@@ -1,39 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>prs_methods</title>
-  <meta name="description" content="Posting ground for my projects and musings within grad school (and hopefully beyond!)">
-
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/main.css">
-</head>
-
-  <script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
-  </script>
-
-  <body>
-      <section id="page_header">
-        <div class="shortParticle">
-<div id="particles-js">
-  <div class="page-header">
-      <h1>
-        <span class="site-title">Scott Kulm</span>
-        <span class="site-description">Graduate Student</span>
-	<!-- span class="site-back-home"><a href="https://kulmsc.github.io">Home</a></span> -->
-	 <a class="site-back-home" href="https://kulmsc.github.io">Home</a>
-      </h1>
-  </div>
-</div>
-</div>
-
-      </section>
-    <div class="forMarkdown">
-      
 <h1 id="performance-of-polygenic-risk-score-adjustment-methods">Performance of Polygenic Risk Score Adjustment Methods</h1>
 
 <h2 id="introduction">Introduction</h2>
@@ -341,31 +306,3 @@ done
 
 <p>Rather than just displaying the AUC, I take the difference from the clumping AUC, which being the simplest method provides a nice baseline to compare to.  We can see that some other methods, such as SBayesR and Tweedie, can also occasionaly produce high accuracy values, and should therefore likely not be discounted as poor methods.  And again we can see great variance in performance, that is largely dependent on the genetic architechture of the disease under analysis.  However, the simple and easiest take away here is that prsCS is the single, best method to employ, although in general any well thought out AND easy to implement model-based polygenic risk score method will produce an impressive polygenic risk score that will likely serve your needs perfectly well.</p>
 
-
-    </div>
-
-      </div>
-      <footer class="footer">
-    <p>&copy; Scott Kulm</p>
-    <p>Build with Jekyll and <span class="love">❤</span> by <a href="https://github.com/nrandecker">Nathan Randecker</a></p>
-</footer>
-<script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script src="/assets/js/sweet-scroll.min.js"></script>
-<script src="/assets/js/main.js"></script>
-<!-- Google Analytics -->
-
-<script>
-var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-if (dnt != "1" && dnt != "yes") {
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create', '', 'auto');
-ga('send', 'pageview');
-}
-</script>
-
-
-
-  </body>

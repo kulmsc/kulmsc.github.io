@@ -1,0 +1,127 @@
+
+<h1 id="version-one">Version One</h1>
+
+<p>This is the first version of my python ticTacToe.  We will follow the pseudocode and I will point out some interesting python components.</p>
+
+<div class="codeBlock">
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">checkInput</span><span class="p">(</span><span class="n">question</span><span class="p">,</span> <span class="n">possibleInputs</span><span class="p">):</span>
+    <span class="n">readInput</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">readInput</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">possibleInputs</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"bad input, your options include "</span><span class="p">,</span><span class="s">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">possibleInputs</span><span class="p">))</span>
+        <span class="n">readInput</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">readInput</span><span class="p">)</span>
+
+<span class="n">currentBoard</span> <span class="o">=</span> <span class="p">[</span><span class="s">" "</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">)]</span>
+</code></pre></div>  </div>
+</div>
+
+<div class="codeBlock">
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"This is the game of tic-tac-toe"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"The goal is to get three in a row"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Before I can do the same"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Let me get some information, such as your name"</span><span class="p">)</span>
+
+
+<span class="n">playerName</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">"Enter name: "</span><span class="p">)</span>
+<span class="n">playerSymbol</span> <span class="o">=</span> <span class="n">checkInput</span><span class="p">(</span><span class="s">"What is your symbol: "</span><span class="p">,</span> <span class="p">[</span><span class="s">"X"</span><span class="p">,</span><span class="s">"O"</span><span class="p">])</span>
+<span class="n">comSymbol</span> <span class="o">=</span> <span class="s">"O"</span> <span class="k">if</span> <span class="n">playerSymbol</span><span class="o">==</span><span class="s">"X"</span> <span class="k">else</span> <span class="s">"X"</span>
+
+</code></pre></div>  </div>
+</div>
+
+<div class="codeBlock">
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">humanPlay</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">symbol</span> <span class="o">=</span> <span class="n">playerSymbol</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"start human play"</span><span class="p">)</span>
+    <span class="n">playPosition</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">checkInput</span><span class="p">(</span><span class="s">"It is your turn, where will you go: "</span><span class="p">,</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">)]</span> <span class="p">))</span>
+    <span class="k">if</span> <span class="n">board</span><span class="p">[(</span><span class="n">playPosition</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="o">!=</span> <span class="s">" "</span><span class="p">:</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">humanPlay</span><span class="p">(</span><span class="n">board</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">board</span><span class="p">[(</span><span class="n">playPosition</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">symbol</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">board</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">comPlay</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">symbol</span> <span class="o">=</span> <span class="n">comSymbol</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"It is my turn"</span><span class="p">)</span>
+    <span class="n">playPosition</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">)])</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">board</span><span class="p">[(</span><span class="n">playPosition</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="o">!=</span> <span class="s">" "</span><span class="p">:</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">comPlay</span><span class="p">(</span><span class="n">board</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">board</span><span class="p">[(</span><span class="n">playPosition</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">symbol</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">board</span><span class="p">)</span>
+</code></pre></div>  </div>
+</div>
+
+<div class="codeBlock">
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">printBoard</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">"|"</span><span class="p">,</span> <span class="n">board</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">"|"</span><span class="p">,</span> <span class="n">board</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"----------"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s">"|"</span><span class="p">,</span> <span class="n">board</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="s">"|"</span><span class="p">,</span> <span class="n">board</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"----------"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="s">"|"</span><span class="p">,</span> <span class="n">board</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="s">"|"</span><span class="p">,</span> <span class="n">board</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+</code></pre></div>  </div>
+</div>
+
+<div class="codeBlock">
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">checkVictory</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+    <span class="n">victorySets</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span>
+    <span class="n">takenPositions</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">board</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">symbol</span><span class="p">]</span>
+    <span class="n">wins</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">for</span> <span class="n">singleVictory</span> <span class="ow">in</span> <span class="n">victorySets</span><span class="p">:</span>
+        <span class="c1">#if len([i for i in takenPositions if i in singleVictory]) == 3:
+</span>        <span class="k">if</span> <span class="nb">sum</span><span class="p">([</span><span class="n">i</span> <span class="ow">in</span> <span class="n">singleVictory</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">takenPositions</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">wins</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">wins</span><span class="p">)</span>
+</code></pre></div>  </div>
+</div>
+
+<div class="codeBlock">
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"We will flip a coin to see who goes first"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"You can call the toss"</span><span class="p">)</span>
+<span class="n">callFlip</span> <span class="o">=</span> <span class="n">checkInput</span><span class="p">(</span><span class="s">"What is your called flip: "</span><span class="p">,</span> <span class="p">[</span><span class="s">"H"</span><span class="p">,</span><span class="s">"T"</span><span class="p">])</span>
+<span class="n">actualFlip</span> <span class="o">=</span> <span class="s">"H"</span> <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="k">else</span> <span class="s">"T"</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"The actual coin flip was "</span> <span class="o">+</span> <span class="n">actualFlip</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">actualFlip</span> <span class="o">==</span> <span class="n">callFlip</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"You won the toss so go first"</span><span class="p">)</span>
+    <span class="n">playFunc</span> <span class="o">=</span> <span class="n">humanPlay</span>
+    <span class="n">namePlayFunc</span> <span class="o">=</span> <span class="s">"human"</span>
+    <span class="n">currentSymbol</span> <span class="o">=</span> <span class="n">playerSymbol</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"I won the toss, wait while I go first"</span><span class="p">)</span>
+    <span class="n">playFunc</span> <span class="o">=</span> <span class="n">comPlay</span>
+    <span class="n">namePlayFunc</span> <span class="o">=</span> <span class="s">"com"</span>
+    <span class="n">currentSymbol</span> <span class="o">=</span> <span class="n">comSymbol</span>
+
+<span class="c1">#initialize board #########################################################
+</span><span class="n">currentBoard</span> <span class="o">=</span> <span class="p">[</span><span class="s">" "</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">)]</span>
+<span class="n">modelBoard</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">)]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Throughout the game you will select the place you want to go based on these numbers"</span><span class="p">)</span>
+<span class="n">printBoard</span><span class="p">(</span><span class="n">modelBoard</span><span class="p">)</span>
+</code></pre></div>  </div>
+</div>
+
+<div class="codeBlock">
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">checkWin</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">checkTie</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="k">while</span> <span class="n">checkWin</span> <span class="o">==</span> <span class="bp">False</span> <span class="ow">and</span> <span class="n">checkTie</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+    <span class="n">currentBoard</span> <span class="o">=</span> <span class="n">playFunc</span><span class="p">(</span><span class="n">currentBoard</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"This is where the last person went"</span><span class="p">)</span>
+    <span class="n">printBoard</span><span class="p">(</span><span class="n">currentBoard</span><span class="p">)</span>
+    <span class="n">checkWin</span> <span class="o">=</span> <span class="n">checkVictory</span><span class="p">(</span><span class="n">currentBoard</span><span class="p">,</span> <span class="n">currentSymbol</span><span class="p">)</span>
+    <span class="n">playFunc</span> <span class="o">=</span> <span class="n">comPlay</span> <span class="k">if</span> <span class="n">namePlayFunc</span><span class="o">==</span><span class="s">"human"</span> <span class="k">else</span> <span class="n">humanPlay</span>
+    <span class="n">namePlayFunc</span> <span class="o">=</span> <span class="s">"com"</span> <span class="k">if</span> <span class="n">namePlayFunc</span><span class="o">==</span><span class="s">"human"</span> <span class="k">else</span> <span class="s">"human"</span>
+    <span class="n">currentSymbol</span> <span class="o">=</span> <span class="s">"X"</span> <span class="k">if</span> <span class="n">currentSymbol</span><span class="o">==</span><span class="s">"O"</span> <span class="k">else</span> <span class="s">"O"</span>
+    <span class="c1">#checkTie = " " not in [item for sublist in currentBoard for item in sublist]
+</span>    <span class="n">checkTie</span> <span class="o">=</span> <span class="s">" "</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">currentBoard</span>
+
+
+<span class="k">if</span> <span class="n">checkWin</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">namePlayFunc</span> <span class="o">==</span> <span class="s">"com"</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Congratulations, you won!"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"I'm sorry, but you lost"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"We tied!"</span><span class="p">)</span>
+
+</code></pre></div>  </div>
+</div>
