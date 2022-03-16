@@ -1,3 +1,4 @@
+
 <h1 id="discovery-and-association-of-pathogenic-cardiac-rare-variants">Discovery and Association of Pathogenic Cardiac Rare Variants</h1>
 
 <h2 id="introduction">Introduction</h2>
@@ -53,7 +54,7 @@
 
 <p>The rare pathogenic variants identified are hypothesized to associate with the existence of adverse cardiac conditions.  For simplicity, we will look at only one cardiac condition that is relatively common (and therefore has good statistical power), atrial fibrillation.  We identify each of individual as either having atrial fibrillation or not by their electronic health records, which come in the form of ICD-10 codes.  We therefore have both a matrix of rare, pathogenic genotypes and a vector of phenotypes.  If we were conducting a genome-wide association study we would iterate through each column of our matrix and regress it against the phenotype vector.  As stated earlier (in the introduction) we probably should not do this because the variants are so rare that the regression is under-powered.  We can work around this problem by combining rare variants together according to the gene they fall within.  For example, the first five rare variants identified might all fall into the ABC gene.  We can therefore sum these five variants together into a single ABC pathogenic gene vector and regress it against the phenotype.  This is the exact process we completed, except that the regression we completed was specifically a logistic regression adjusted for many important risk factors, such as age, sex, and BMI.  The strength of the associations are depicted below.</p>
 
-<p><img src="/assets/img/genes.af.png" alt="af genes" />{ width=50% }</p>
+<p><img src="/assets/img/genes.af.png" alt="af genes" width="800" /></p>
 
 <p>We can directly see that while the pathogenic vectors of most genes fall under the Bonferonni signficance threshold (the horizontal line), two genes do surpass the threshold: TTN and PKP2.  Both of these genes are often mentioned in research articles of cardiac genetics, which makes these findings strong replications of prior results.</p>
 
@@ -61,32 +62,34 @@
 
 <p>While a nice result, we can go a step further and up the sophistication of our analysis by integrating in many possibly confoudning variables (age, sex, BMI, alcohol, smoking, health history, etc.) and look at the age of onset of atrial fibrillation rather than the simple binary disease status.  This type of analysis is possible with a cox proportional hazard model, which just like a logistic regression model can be multivariate, or consider multiple covariates, and through its survival framework can track the time of each individual until disease or censorship (lost to follow-up).  Unfortunately, this idea was considered a little too complex for my collaborators, so we scrapped the adjustment idea and just went with a Kaplan Meier Curve which tracks the rate of survival of groups over time (just as simple as it seems).  The code we used to do is as follows:</p>
 
-<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#create a survdiff object, which tests the difference between two survival curves</span><span class="w">
-</span><span class="c1">#in this case the two curves are defined by the pathogenic vector status</span><span class="w">
-</span><span class="n">diff</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">survdiff</span><span class="p">(</span><span class="n">Surv</span><span class="p">(</span><span class="n">time_to</span><span class="p">,</span><span class="w"> </span><span class="n">primary_pheno</span><span class="p">)</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">binary_lpv</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span><span class="w">
-</span><span class="n">pval</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">pchisq</span><span class="p">(</span><span class="n">diff</span><span class="o">$</span><span class="n">chisq</span><span class="p">,</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">diff</span><span class="o">$</span><span class="n">n</span><span class="p">)</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="n">lower.tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+<div style="text-align: left">
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#create a survdiff object, which tests the difference between two survival curves
+#in this case the two curves are defined by the pathogenic vector status
+diff &lt;- survdiff(Surv(time_to, primary_pheno) ~ binary_lpv, data = df)
+pval &lt;- pchisq(diff$chisq, length(diff$n)-1, lower.tail = FALSE)
 
-</span><span class="c1">#we follow a very similar process to actually compute the KM curve</span><span class="w">
-</span><span class="c1">#the problem is that the output of the survfit function stacks up the survival rates across the two pathogenic groups</span><span class="w">
-</span><span class="n">surv_dat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">survfit</span><span class="p">(</span><span class="n">Surv</span><span class="p">(</span><span class="n">time_to</span><span class="p">,</span><span class="w"> </span><span class="n">primary_pheno</span><span class="p">)</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">binary_lpv</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span><span class="w">
+#we follow a very similar process to actually compute the KM curve
+#the problem is that the output of the survfit function stacks up the survival rates across the two pathogenic groups
+surv_dat &lt;- survfit(Surv(time_to, primary_pheno) ~ binary_lpv, data = df)
 
-</span><span class="c1">#so what we have to do is find the point where the survfit data is stacked</span><span class="w">
-</span><span class="c1">#then we split the stack to create a nice, neat dataframe which can be plotted</span><span class="w">
-</span><span class="n">plot_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="s2">"time"</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">surv_dat</span><span class="o">$</span><span class="n">time</span><span class="p">,</span><span class="w"> </span><span class="s2">"value"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">surv_dat</span><span class="o">$</span><span class="n">surv</span><span class="p">,</span><span class="w">
-                      </span><span class="s2">"variable"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"-"</span><span class="p">,</span><span class="w"> </span><span class="s2">"se"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">surv_dat</span><span class="o">$</span><span class="n">std.err</span><span class="p">,</span><span class="w"> </span><span class="n">stringsAsFactors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">F</span><span class="p">)</span><span class="w">
-</span><span class="n">split_point</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">which</span><span class="p">(</span><span class="n">surv_dat</span><span class="o">$</span><span class="n">time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">surv_dat</span><span class="o">$</span><span class="n">time</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">surv_dat</span><span class="o">$</span><span class="n">time</span><span class="p">)],</span><span class="w"> </span><span class="m">100000</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w">
-</span><span class="n">plot_df</span><span class="o">$</span><span class="n">variable</span><span class="p">[(</span><span class="n">split_point</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="o">:</span><span class="n">nrow</span><span class="p">(</span><span class="n">plot_df</span><span class="p">)]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"+"</span><span class="w">
+#so what we have to do is find the point where the survfit data is stacked
+#then we split the stack to create a nice, neat dataframe which can be plotted
+plot_df &lt;- data.frame("time" =  surv_dat$time, "value" = 1 - surv_dat$surv,
+                      "variable" = "-", "se" = surv_dat$std.err, stringsAsFactors = F)
+split_point &lt;- which(surv_dat$time - c(surv_dat$time[2:length(surv_dat$time)], 100000) &gt; 0)
+plot_df$variable[(split_point + 1):nrow(plot_df)] &lt;- "+"
 
-</span><span class="c1">#the plot is made here, specifically with ggplot</span><span class="w">
-</span><span class="n">the_plot</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ggplot</span><span class="p">(</span><span class="n">plot_df</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">time</span><span class="o">/</span><span class="m">365</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">*</span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">variable</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">geom_line</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
-  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Time From Enrollment, years"</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"Cumulative Population with "</span><span class="p">,</span><span class="w"> </span><span class="n">caplabel</span><span class="p">,</span><span class="w"> </span><span class="s2">", %"</span><span class="p">),</span><span class="w">
-       </span><span class="n">caption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"P = "</span><span class="p">,</span><span class="w"> </span><span class="nf">signif</span><span class="p">(</span><span class="n">pval</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)),</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"LPV\nStatus"</span><span class="p">)</span><span class="w">
-</span><span class="n">plot</span><span class="p">(</span><span class="n">the_plot</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+#the plot is made here, specifically with ggplot
+the_plot &lt;- ggplot(plot_df, aes(time/365, value *100, color = variable)) + geom_line(size = 2) +
+  labs(x = "Time From Enrollment, years", y = paste0("Cumulative Population with ", caplabel, ", %"),
+       caption = paste0("P = ", signif(pval, 4)), color = "LPV\nStatus")
+plot(the_plot)
+</code></pre></div>  </div>
+</div>
 
 <p>The resulting plot actually looks like:</p>
 
-<p><img src="/assets/img/km_diagnosed_fromass.af.png" alt="af km curve" />{ width=50% }</p>
+<p><img src="/assets/img/km_diagnosed_fromass.af.png" alt="af km curve" width="800" /></p>
 
 <p>We can clearly see that individuals who hold one of the pathogenic variants are significantly more likely to experience atrial fibrillation as compared to individuals without any pathogenic variants.  With this single image our hypothesis is almost confirmed.  We clearly could continue our work to provide for the proper adjustment within the survival analysis, and we could even go further to work on other cardiac conditions.</p>
 

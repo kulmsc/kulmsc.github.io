@@ -193,7 +193,7 @@ The aformentioned polygenic risk score methods were applied to data originating 
 Most summary statistics were acquired from the GWAS Catalog (https://www.ebi.ac.uk/gwas/downloads/summarystatistics). All studies were sought that had relatively high sample size, studied relatively prevalent, binary, disease traits, contained both minor and major alleles, and did not use UK Biobank data. In total 20 traits were chosen. All summary statistics were downloaded directly from the FTP server. Two additional summary statistics were acquired that were not within the GWAS Catalog. Migraine data from Gormley et al. came from a 23andMe data agreement, and anxiety and schizophrenia data came from the Psychiatric Genetic Consortium through their website (https://www.med.unc.edu/pgc/results-and-downloads).  A brief description of each set of summary statistics utilized in this investigation is provided in table M4.  A conversion script was deployed to regularize the various summary statistics. To only retain the highest quality single nucleotide polymorphisms (SNPs), a set of stringent criteria were assumed. If a SNP broke any of the rules in Table M5 it was removed from the larger summary statistics.  In addition to the quality control, the alleles were either flipped or reversed to match the UK Biobank alleles by utilizing the snp_match function from the bigsnpr function. Lastly, the summary statistics were broken into a set for each chromosome.
 
 ![qc rules](/assets/img/table_m5.png) \
-Table M5
+<span style="font-family:Arial">Table M5</span>
 
 
 ### UK Biobank
@@ -203,7 +203,8 @@ The UK Biobank is a very large, very well-informed data-set.  Over 500,000 peopl
 The UK Biobank imputed data was utilized to adjust summary statistics and create scores.  Individuals not meeting the criteria listed in Table M1 were excluded. Processing of genetic material, except when required by specific adjustment methods, utilized the bgenix and PLINK utilities. The most efficient, and thereby utilized, combination of these utilities started with bgenix to subset the necessary SNPs, PLINK2 to complete additional QC, and PLINK1.9 to complete scoring, clumping or other computations. A final important note should be made that all of the genetic variants described are germline, held in common by nearly every cell in the body. While forms of cancer are discussed, somatic mutations are never utilized.
 
 ![ukbb rules](/assets/img/table_m1.png) \
-Table M1
+<span style="font-family:Arial">Table M1</span>
+
 
 ## Adjusting Summary Statistics
 
@@ -214,7 +215,8 @@ The summary statistics for each chromosome and GWAS were adjusted using various 
 
 As I have described so far there is a great deal of code that goes into this scoring process.  While each of the methods have some form of publication and accompanying documentation, there is often times a very large gap between theoretical implementation and practical polygenic risk scores.  For the full description of this process you will need to check out the full code repository, but for an example I will provide a snippet of the code used to execute the clumping method.
 
-<div style="text-align: right">
+
+<div style="text-align: left">
 ```
 #The clumping file is submitted by a pipeline process
 #The input variables therefore need to be set, as they are here
@@ -265,6 +267,8 @@ With the original GWAS summary statistics adjusted under various generative meth
 
 While there is less code required to calculate a polygenic risk score than adjust summary statistics, the code that is required is rather system specific and therefore not likely very helpful.  However, I will display below the small snippet of code that actually extracts the necessary biobank data and then calls a PLINK command to calculate the polygenic risk score.
 
+
+<div style="text-align: left">
 ```
  #get the variants IDs that are within the score set of variants
  cat ../mod_sets/${author}/${ss_name} | cut -f3 > temp_files/rsids.${i}
@@ -288,25 +292,28 @@ While there is less code required to calculate a polygenic risk score than adjus
   zstd --rm small_score_files/score.${low_author}.${chr}.${ver}.${method}.profile
 
 ```
+</div>
+
 
 As I mentioned, this is not the only way to calculate a polygenic risk score.  Alternatively, you can calculate several polygenic risk scores from several sets of variants all at the same time.  The variant set is just appended (column-wise) with other effect sizes that correspond to the other scores.  This larger variant set can then be processed with PLINK2.  While this system is much faster, in my experience the output does not perfectly align with the output of the above, split up style of code (although it is very close).  So use at your own risk:
 
+<div style="text-align: left">
 ```
-#This is an R script that combines variant sets together into one large variant set
-#with multiple columns that correspond to multiple effect sizes
+ #This is an R script that combines variant sets together into one large variant set
+ #with multiple columns that correspond to multiple effect sizes
  Rscript align_sumstats.R $chr $cauthor
 
-#get all of the possible variant IDs required to compute the polygenic risk scores
+    #get all of the possible variant IDs required to compute the polygenic risk scores
     cat big_mod_set | cut -f1 | tail -n+2 > temp_files/all_rsid
 
-#figure out the number of polygenic risk scores to be calculated
+    #figure out the number of polygenic risk scores to be calculated
     num_cols=`head -1 big_mod_set | cut -f3-300 | tr '\t' '\n' | wc -l`
 
-#extract the necessary variants from the entire UK Biobank dataset
+    #extract the necessary variants from the entire UK Biobank dataset
     bgenix -g ~/athena/ukbiobank/imputed/ukbb.${chr}.bgen
        -incl-rsids temp_files/all_rsid > temp_files/temp.bgen
 
-#actually calculate the polygenic risk scores
+    #actually calculate the polygenic risk scores
     plink2_new --memory 12000 --threads 12 --bgen temp_files/temp.bgen ref-first
        --sample ~/athena/ukbiobank/imputed/ukbb.${chr}.sample --keep-fam temp_files/brit_eid
        --score big_mod_set 1 2 header-read cols=+scoresums --score-col-nums 3-${num_cols}
@@ -314,9 +321,11 @@ As I mentioned, this is not the only way to calculate a polygenic risk score.  A
 
     rm temp_files/temp.bgen temp_files/all_rsid big_mod_set
 
-#compress the resulting scores
+    #compress the resulting scores
     gzip big_small_scores/res.${chr}.${low_author}.sscore
 ```
+</div>
+
 
 ## Tuning to the Best Score (For Each Disease)
 
@@ -326,15 +335,15 @@ Within each fold of the cross-validation a logistic regression model was fit to 
 
 Unfortunately, there is a tremendous amont of code that goes into creating this cross validation framework, setting up the proper data frames, and then forming the models and statistics.  There is not even a particularly good snippet to show.  So please, check out the full code repository if you are interested.  The accuracy results, stratified according to method, looks as follows:
 
-<img src="/assets/img/tune.heatmap.png" alt="drawing" width="200"/>
+<img src="/assets/img/tune.heatmap.png" alt="drawing" width="800"/>
 
 Now stratifying across all of the diseases prevents a clear determination on which method is actually working the best.  Which is why we can collapse the disease dimension by simply taking the mean rank.
 
-![tune mean rank](/assets/img/tune.mean_ranke.png)
+<img src="/assets/img/tune.mean_ranke.png" alt="mean rank" width="800"/>
 
 We see that prsCS, lassosum and LDpred2 are all the preferred methods.  Although, there is a good deal of variance in this mean rank statistic.  To get a final improved understanding of which method is the best we can go back to the originating accuracy statistic, AUC.
 
-![tune diff clump](/assets/img/tune.diff_clump.png)
+<img src="/assets/img/tune.diff_clump.png" alt="tune diff clump" width="800"/>
 
 Rather than just displaying the AUC, I take the difference from the clumping AUC, which being the simplest method provides a nice baseline to compare to.  We can see that some other methods, such as SBayesR and Tweedie, can also occasionaly produce high accuracy values, and should therefore likely not be discounted as poor methods.  And again we can see great variance in performance, that is largely dependent on the genetic architechture of the disease under analysis.  However, the simple and easiest take away here is that prsCS is the single, best method to employ, although in general any well thought out AND easy to implement model-based polygenic risk score method will produce an impressive polygenic risk score that will likely serve your needs perfectly well.
 
