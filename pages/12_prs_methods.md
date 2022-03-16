@@ -126,38 +126,196 @@ Implementation of the PRScs first required converting the format of the summary 
 
 ### sBLUP
 
+The sBLUP method is another variation on the LDpred theme of approximating the results of a whole genome style regression with only summary statistics from a GWAS in which variants were analyzed independently.  What sBLUP does that is different, is specifically try to replicate a best linear unbiased prediction (BLUP) which is a certain random effect model.  Therefore, we are again handling linkage disequilibrium, because of the whole genome replication, and are trying to again pick out the variants that likely have a true causal relationship to the phenotype by pulling apart the random and fixed effect of each variant.  If you are confused about this last part do not worry, random effect models are rather complicated and are a little beyond the scope of this project, but if you are interested in learning more check out  [this guide](https://online.stat.psu.edu/stat503/lesson/13/13.1), or look at others.
+
 Implementation of the sBLUP method began by down sizing the original summary statistic to only the variants included within the HapMap (\url{https://www.broadinstitute.org/medical-and-population-genetics/hapmap-3}), and the columns were re-arranged to the MA format used throughout the GCTA tool kit.  The actual sblup option was then run within gcta, with the wind option (the LD distance parameter) set to 100.  
 
-Official Documentation: \url{https://cnsgenomics.com/software/gcta/#SBLUP}
+[Originating Publication](https://www.nature.com/articles/s41562-016-0016.pdf)
+[Official Documentation](https://cnsgenomics.com/software/gcta/#SBLUP)
+
+
 
 ### SBayesR
 
+The SBayesR is yet another variation of the LDpred theme (and sBLUP, and prsCS).  SBayesR stands for summary bayesian alphabet, which suggests that this method attempts to replicate the results of a summary bayesian alphabet algorithm from the summary statistics of a GWAS which analyzed variants independently.  The bayesian alphabet part of this description describes a complicated algorithm that found a key weakness in the BLUP, or generally fixed effect style of regression.  Specifically, the fixed effect model assumes that all variants come from the same underlying distribution.  In the simplest bayesian alphabet algorithm, each variant's effect size is drawn from its own distribution with its own underlying variance.  Other similar algorithms exist which make different assumptions, or priors, on this underlying distribution.  For somewhat obvious reasons these bayesian whole genome regression algorithms can get exceedingly complex.  For more information check out [this review](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3697965/pdf/573.pdf), or find another you prefer.
+
 Implementation of the SBayesR method started similarly to sBLUP, with conversion of the summary statistics to the necessary MA format.  The primary SBayesR computations were then run within the gctb toolkit.  The ldm files were generated from the UK Biobank and down sized to HapMap variants, and could be downloaded directly from the documentation.  Ldm files with more variants were not used due to size limitations.  
 
-Official Documentation: \url{https://cnsgenomics.com/software/gctb/#SummaryBayesianAlphabet}
+[Originating Publication](https://www.nature.com/articles/s41467-019-12653-0)
+[Official Documentation](https://cnsgenomics.com/software/gctb/#SummaryBayesianAlphabet)
+
 
 ### DBSLMM
 
+DBSLMM stands for deterministic bayes spare linear mixed model, which is a mouthful.  Once again, DBSLMM attempts to convert a set of GWAS summary statistics into an improved format that approximate a more sophisticated modeling framework.  In this instance DBSLMM attempts to combine two of the previously discussed modeling frameworks, the random effects model of BLUP (hence the SLMM) and the abyesian alphabet of SBayesR (hence the B).  The D, which stands for deterministic, is an added layer of algorithmic complexity that allows for a reasonably fast computational solution.  Although, from experience, the many layers of modeling complexity make for a convergence problems.
+
 Additional information was first derived, such as allele frequencies from a PLINK call applied to the UK Biobank data.  Implementation of the DBSLMM algorithm was completed easily within a single R function call.  Once generated p-value and R-squared hyperparameters were iterated over, and the adjusted effect sizes directly computed.
 
-Official Documentation: \url{https://github.com/biostat0903/DBSLMM}
+[Originating Publication](https://www.sciencedirect.com/science/article/pii/S0002929720301099#bib15)
+[Official Documentation](https://github.com/biostat0903/DBSLMM)
+
 
 ### SMTpred
 
+SMTpred is a break from the strech of previously described model based methods.  The key motivation behind SMTpred is that the genetic associations from one phenotype may help illuminate the genetic associations of another, similar phenotype.  Genome wide association studies have utilized this idea within multi-trait BLUP models, which is similar to BLUP except that it harnesses the correlation between traits to better inform the underlying variation of the effect of the variants.  From this model base, just like SBLUP, an algorithm is produced such that summary statistics from a simple GWAS can be adjusted to replicate the results of the multi-trait BLUP.
+
 Implementation of SMTpred is unique in that it required not just the primary summary statistics being adjusted, but also summary statistics of similar diseases.  The exact set of similar summary statistics are determined a priori through genetic correlation calculations.  After proper formatting of the primary and similar summary statistics, they are all entered into a single python function call that adjusts the effect sizes.  The number of similar sets of summary statistics varied.  In addition, SBLUP adjusted effects are also utilized in this process.
 
-Official Documentation: \url{https://github.com/uqrmaie1/smtpred}
+[Originating Publication](https://www.nature.com/articles/s41467-017-02769-6)
+[Official Documentation](https://github.com/uqrmaie1/smtpred)
+
 
 ### LDAK
 Most of the methodology behind the LDAK adjustment is similar to that of PRScs, however the actual application has been custom-written and therefore requires far different inputs and operations.  First, the summary statistics are converted into the proper format and a subset of the UKBB is converted such that the SNP identifiers are by position and allele, matching the style of externally downloaded annotation files.  Next, per-SNP heritabilities are computed using the full BLD-LDAK heritability model, which includes 64 different types of annotations.  The summary statistics are split three ways.  In one split pseudo-summary statistics are computed, in another SNP-SNP correlations are computed.  Next, the actual SNP adjustments are made assuming priors of lasso, lasso-sparse, ridge, bolt, bayes-r, and bayesr-shrink.  For each model multiple parameters are tried, the best of which is determined via scoring with the third split of the summary statistics.  High LD regions are removed if present, and the final adjusted effect sizes are substituted to form the final adjusted summary statistics.
 
-Official Documentation: \url{http://dougspeed.com/megaprs/}
+[Originating Publication](https://www.nature.com/articles/s41467-021-24485-y)
+[Official Documentation](http://dougspeed.com/megaprs/)
+
 
 ### JAMPred
 
+The JAMPred algorithm attempts to replicate a spare bayesian model, a somewhat similar idea as SBayesR.However, the exact details are different.  
+
 Implementation of the JAMPred algorithm is analogous to LDpred2 as both chiefly complete their computations within R.  However, JAMPred is far less readily able to handle the large genotypic matrices necessary.  Therefore, LD pruning in PLINK was first carried out, to reduce the size of the genotypic files.  Next, the genotypic data is read into R using the bignsnpr package, and is then carefully converted into the necessary matrix specifications while still being in a memory-efficient format.  The primary JAMPred function is then called over several iterations of lambda values, generating the adjusted effect sizes.
 
-Official Documentation: \url{https://github.com/pjnewcombe/R2BGLiMS}
+[Originating Publication](https://onlinelibrary.wiley.com/doi/full/10.1002/gepi.22245)
+[Official Documentation](https://github.com/pjnewcombe/R2BGLiMS)
 
 
+
+## Genetic Data
+
+The aformentioned polygenic risk score methods were applied to data originating from the GWAS Catalog and UK Biobank.  Specifically, the genotypic data from the UK Biobank supplied reference linkage disequilibrium matricies and the genetic information that eventually was utilized for scoring, and full summary statistics from the GWAS Catalog supplied a collection of genetic variants' effect sizes.
+
+### Summary Statistics
+
+Most summary statistics were acquired from the GWAS Catalog (https://www.ebi.ac.uk/gwas/downloads/summarystatistics). All studies were sought that had relatively high sample size, studied relatively prevalent, binary, disease traits, contained both minor and major alleles, and did not use UK Biobank data. In total 20 traits were chosen. All summary statistics were downloaded directly from the FTP server. Two additional summary statistics were acquired that were not within the GWAS Catalog. Migraine data from Gormley et al. came from a 23andMe data agreement, and anxiety and schizophrenia data came from the Psychiatric Genetic Consortium through their website (https://www.med.unc.edu/pgc/results-and-downloads).  A brief description of each set of summary statistics utilized in this investigation is provided in table M4.  A conversion script was deployed to regularize the various summary statistics. To only retain the highest quality single nucleotide polymorphisms (SNPs), a set of stringent criteria were assumed. If a SNP broke any of the rules in Table M5 it was removed from the larger summary statistics.  In addition to the quality control, the alleles were either flipped or reversed to match the UK Biobank alleles by utilizing the snp_match function from the bigsnpr function. Lastly, the summary statistics were broken into a set for each chromosome.
+
+![qc rules](/assets/img/table_m5.png)
+Table M5
+
+
+### UK Biobank
+
+The UK Biobank is a very large, very well-informed data-set.  Over 500,000 people were originally enrolled, all of whom were genreally between 40-70.  These individuals were given an intensive questionaire, were genotyped with an array whose data was later imputed, were given blood/urine tests, and more.  The specifics of the biobank is descibed in great detail in many other places, namely within the [originating publication](https://www.nature.com/articles/s41586-018-0579-z).
+
+The UK Biobank imputed data was utilized to adjust summary statistics and create scores.  Individuals not meeting the criteria listed in Table M1 were excluded. Processing of genetic material, except when required by specific adjustment methods, utilized the bgenix and PLINK utilities. The most efficient, and thereby utilized, combination of these utilities started with bgenix to subset the necessary SNPs, PLINK2 to complete additional QC, and PLINK1.9 to complete scoring, clumping or other computations. A final important note should be made that all of the genetic variants described are germline, held in common by nearly every cell in the body. While forms of cancer are discussed, somatic mutations are never utilized.
+
+![ukbb rules](/assets/img/table_m1.png)
+Table M1
+
+## Adjusting Summary Statistics
+
+The summary statistics for each chromosome and GWAS were adjusted using various methods for the purpose of generating polygenic risk scores. The process of adjusting first requires the adjustment method, 16 of which were utilized in this investigation, all listed in the table at the top of the section.  The various parameters that combined with each method to create the adjusted set of variants.  Second, the set of summary statistics, listed in table M4 and previously quality controlled.  Third, many methods require reference genetic data which often took the form of a small subset of UK Biobank data or alternative sources, namely the 1000 Genomes project.  Fourth, a few methods required additional annotations.  Each of these components were combined following the documentation described at the location the generative method was downloaded from.  If any detail was missing in the documentation, then the accompanying publication was used.  In this manner we did our best to apply each adjustment method exactly as the authors intended it.  Although, we do understand that certain sets of summary statistics were sub-optimal, and the generative methods were not designed for their use.  While the adjustment process varied in the actual adjustment computations, they all shared a beginning preparation step and a finishing step that substituted and/or subset the determined variant effects into the previous, original summary statistics.
+
+![summary statistics](/assets/img/table_m4.png)
+Table M4
+
+As I have described so far there is a great deal of code that goes into this scoring process.  While each of the methods have some form of publication and accompanying documentation, there is often times a very large gap between theoretical implementation and practical polygenic risk scores.  For the full description of this process you will need to check out the full code repository, but for an example I will provide a snippet of the code used to execute the clumping method.
+
+```
+#The clumping file is submitted by a pipeline process
+#The input variables therefore need to be set, as they are here
+chr=$1
+author=$2
+dir=$3
+low_author=`echo "$author" | tr '[:upper:]' '[:lower:]'`
+d=comp_zone/dir${dir}
+
+
+#There are multiple possible clumping parameters, for example the p-value and r2 thresholds
+#the clump_param_specs file lists all of these parameters
+#within this script I iterate over the different parameter options
+i=1
+cat all_specs/clump_param_specs | tail -n +2 | while read spec;do
+  plim=`echo $spec | cut -f1 -d' '`
+  r2lim=`echo $spec | cut -f2 -d' '`
+
+  #want to double check that I have not already adjusted the summary statistics with the current set of parameters
+  if [ ! -e ~/athena/doc_score/mod_sets/${author}/${low_author}.${chr}.clump.${i}.ss ]; then
+
+    #this is where the clumping actually happens, all with the PLINK tool
+    #UK Biobank data is contained within the geno_files directly, previously carefully extracted and processed for this purpose
+    plink --memory 4000 --threads 1 --bfile geno_files/${low_author}.${chr} --clump temp_files/ss.${low_author}.${chr} --clump-snp-field RSID --clump-p1 $plim --clump-r2 $r2lim --out ${d}/out
+
+    #If there were variants that were clumped, I want to extract those variant IDs and use them to subset the entire gwas summary statistics
+    if [ -f ${d}/out.clumped ]; then
+      sed -e 's/ [ ]*/\t/g' ${d}/out.clumped | sed '/^\s*$/d' | cut -f4 | tail -n +2 > ${d}/done_rsids
+      fgrep -w -f ${d}/done_rsids temp_files/ss.${low_author}.${chr} > ~/athena/doc_score/mod_sets/${author}/${low_author}.${chr}.clump.${i}.ss
+    fi
+  fi
+
+  let i=i+1
+done
+```
+
+## Creating Polygenic Risk Scores
+
+With the original GWAS summary statistics adjusted under various generative methods and respective hyperparameters, polygenic risk scores could be created. This computation was easily accomplished by using the "–score" option within PLINK1.9, and by following the genetic data processing workflow previously described. The "sum" option was included in the PLINK call to prevent normalization before the polygenic risk score for each chromosome was added together. To mitigate possible allele and variant mismatching, one genotypic file was created for each score that was needed. While this specificity slowed down the scoring, it appeared to reduce round-off error.
+
+While there is less code required to calculate a polygenic risk score than adjust summary statistics, the code that is required is rather system specific and therefore not likely very helpful.  However, I will display below the small snippet of code that actually extracts the necessary biobank data and then calls a PLINK command to calculate the polygenic risk score.
+
+```
+ #get the variants IDs that are within the score set of variants
+ cat ../mod_sets/${author}/${ss_name} | cut -f3 > temp_files/rsids.${i}
+
+  #pull out the score set of variants from the entire UK Biobank genotypes bgen file
+  bgenix -g ~/athena/ukbiobank/imputed/ukbb.${chr}.bgen -incl-rsids temp_files/rsids.${i} > temp_files/temp.${i}.bgen
+
+  #convert the bgen file into a PLINK (bed, bim, fam) file type
+  plink2_new --memory 12000 --threads 12 --bgen temp_files/temp.${i}.bgen ref-first --sample ~/athena/ukbiobank/imputed/ukbb.${chr}.sample --keep-fam temp_files/brit_eid --make-bed --out temp_files/geno.${i}
+  rm temp_files/temp.${i}.bgen
+
+  #calculate the polygenic risk score
+  plink --memory 12000 --threads 12 --bfile temp_files/geno.${i} --keep-allele-order --score ../mod_sets/${author}/${ss_name} 3 4 7 sum --out small_score_files/score.${low_author}.${chr}.${ver}.${method}
+
+  #compress the polygenic risk score
+  zstd --rm small_score_files/score.${low_author}.${chr}.${ver}.${method}.profile
+
+```
+
+As I mentioned, this is not the only way to calculate a polygenic risk score.  Alternatively, you can calculate several polygenic risk scores from several sets of variants all at the same time.  The variant set is just appended (column-wise) with other effect sizes that correspond to the other scores.  This larger variant set can then be processed with PLINK2.  While this system is much faster, in my experience the output does not perfectly align with the output of the above, split up style of code (although it is very close).  So use at your own risk:
+
+```
+#This is an R script that combines variant sets together into one large variant set
+#with multiple columns that correspond to multiple effect sizes
+ Rscript align_sumstats.R $chr $cauthor
+
+#get all of the possible variant IDs required to compute the polygenic risk scores
+    cat big_mod_set | cut -f1 | tail -n+2 > temp_files/all_rsid
+
+#figure out the number of polygenic risk scores to be calculated
+    num_cols=`head -1 big_mod_set | cut -f3-300 | tr '\t' '\n' | wc -l`
+
+#extract the necessary variants from the entire UK Biobank dataset
+    bgenix -g ~/athena/ukbiobank/imputed/ukbb.${chr}.bgen -incl-rsids temp_files/all_rsid > temp_files/temp.bgen
+
+#actually calculate the polygenic risk scores
+    plink2_new --memory 12000 --threads 12 --bgen temp_files/temp.bgen ref-first --sample ~/athena/ukbiobank/imputed/ukbb.${chr}.sample --keep-fam temp_files/brit_eid --score big_mod_set 1 2 header-read cols=+scoresums --score-col-nums 3-${num_cols} --out big_small_scores/res.${chr}.${low_author}
+
+    rm temp_files/temp.bgen temp_files/all_rsid big_mod_set
+
+#compress the resulting scores
+    gzip big_small_scores/res.${chr}.${low_author}.sscore
+```
+
+## Tuning to the Best Score (For Each Disease)
+
+ The best generative method and set of respective hyperparameters for each disease was determined through application of cross-validation within a training phase of the UK Biobank. Specifically, the tuning process began with only 60% of all British individuals who passed QC. Then three folds were iterated through in which two thirds of the data was used for training and the remaining third for testing. These folds were themselves repeated three times, shifting the start of the index that determined the three groups by one ninth of the total population. This method is commonly called repeated cross fold validation.
+
+Within each fold of the cross-validation a logistic regression model was fit to the training data.  This model regressed the covariates of age at time of assessment, sex, top ten genetic principal components and a polygenic risk score against the binary disease labels.  The model’s predictions of the testing data were compared to the actual disease labels of the testing data, generating a receiver operator curve, from which the area under the curve, or AUC was computed.  Once all folds were complete the AUC values were averaged over the nine folds.  From these averaged AUCs the greatest value corresponds to the best polygenic risk score.
+
+Unfortunately, there is a tremendous amont of code that goes into creating this cross validation framework, setting up the proper data frames, and then forming the models and statistics.  There is not even a particularly good snippet to show.  So please, check out the full code repository if you are interested.  The accuracy results, stratified according to method, looks as follows:
+
+![tune heatmap](/assets/img/tune.heatmap.png)
+
+Now stratifying across all of the diseases prevents a clear determination on which method is actually working the best.  Which is why we can collapse the disease dimension by simply taking the mean rank.
+
+![tune mean rank](/assets/img/tune.mean_ranke.png)
+
+We see that prsCS, lassosum and LDpred2 are all the preferred methods.  Although, there is a good deal of variance in this mean rank statistic.  To get a final improved understanding of which method is the best we can go back to the originating accuracy statistic, AUC.
+
+![tune diff clump](/assets/img/tune.diff_clump.png)
+
+Rather than just displaying the AUC, I take the difference from the clumping AUC, which being the simplest method provides a nice baseline to compare to.  We can see that some other methods, such as SBayesR and Tweedie, can also occasionaly produce high accuracy values, and should therefore likely not be discounted as poor methods.  And again we can see great variance in performance, that is largely dependent on the genetic architechture of the disease under analysis.  However, the simple and easiest take away here is that prsCS is the single, best method to employ, although in general any well thought out AND easy to implement model-based polygenic risk score method will produce an impressive polygenic risk score that will likely serve your needs perfectly well.
 
