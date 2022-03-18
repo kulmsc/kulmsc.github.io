@@ -32,9 +32,8 @@ Although, it is important to note in this process that the descriptions of bette
   <a class="link" href="#covar" data-scroll>Model Covariates</a>
 </div>
 
-</br>
-</br>
-</br>
+
+
 
 
 <div class="vertical-space"></div>
@@ -49,11 +48,11 @@ From these two general types of modified age representation models, I have imple
 
 
 ![age onset prs](/assets/img/age_onset_prs.png)
+
 <span style="font-family:Arial">Figure 2 from "Polygenic and clinical risk scores and their impact on age at onset and prediction of cardiometabolic diseases and common cancers" by Mars. et al, published in [Nature Medicine](https://www.nature.com/articles/s41591-020-0800-0). The proportions of early- and late-onset cases with high clinical risk, high polygenic risk or neither. A high PRS is defined as one that is in the top decile of the distribution. The number of early- and late-onset cases for CHD was 190 and 1,019, for T2D 117 and 1,229, for AF 61 and 168, for breast cancer 46 and 696, and for prostate cancer 77 and 1,095. CHD, T2D and AF cases from FINRISK and breast and prostate cancer from FinnGen, all incident cases. The clinical high risk definitions were as follows: for CHD, the 10-year risk calculator for hard ASCVD ≥7.5%, according to the pooled cohort equations by ACC/AHA (2013); for T2D, a 10-year risk ≥33% when constructing a calculator with risk factors listed in the American Diabetes Association (ADA) criteria for testing for diabetes or prediabetes in asymptomatic adults; for AF, the 5-year risk of AF >5%, by a revised version of the CHARGE-AF; for breast and prostate cancer, a 10-year risk ≥5% with clinical risk factors.</span>
 
-</br>
-</br>
-</br>
+
+
 
 
 <div class="vertical-space"></div>
@@ -70,9 +69,8 @@ As I have alluded to in the previous paragraph, two delayed entry models were es
 ![pencina censor](/assets/img/pencina_censor.png)
 <span style="font-family:Arial">Table extracted from Pencina et al.</span>
 
-</br>
-</br>
-</br>
+
+
 
 
 <div class="vertical-space"></div>
@@ -102,7 +100,9 @@ Disease labels, which determine the accuracy of risk predictions, are commonly b
 
 Our alternative approach to these disease labels was a model prediction that incorporated a wealth of information, such that one feature may be corrupted, and the larger prediction will remain relatively unchanged.  Descriptions on how the disease prediction was made can be found earlier in this methods section.  With the CoxNet model predictions we modified the current disease labels by either reclassifying individuals, changing their label to that identified by the prediction, or removing individuals, thereby reducing the size of the cohort.  Either modification was only employed upon sections of the cohort that held very high or low disease predictions and did not or did previously report the disease, respectively.  For example, individuals whose CoxNet model prediction was in the highest 5% amongst all individuals and were not positive for disease under the previous labels were removed or reclassified.  Each of these analyses followed the same assessment procedure as the plain model.  The accuracy of these models are indicated in the figure below.
 
-![conc disease label](/assets/img/conc_diseaselabel.png)
+<img src="/assets/img/conc_diseaselabel.png" alt="conc disease label" width="800"/>
+
+
 
 
 
@@ -111,9 +111,8 @@ Our alternative approach to these disease labels was a model prediction that inc
 </section>
 ### Model Covariates
 
-
 The features/covariates included in disease prediction models alongside the polygenic risk score are often manually and sparingly chosen.  In this situation the polygenic risk score may become confounded, and thereby improperly represent an individual’s genetic risk.  For example, a model of heart disease that includes the covariates of age, sex, BMI and family history may seem to contain all relevant features, yet blood pressure and/or smoking history may also be relevant to the prediction of heart disease.  The application of a systematic feature selection process could unbiasedly determine which features should be included in a model so that the polygenic risk score is properly adjusted.  While such processes do exist, to our knowledge nearly all investigations manually select a limited set of model covariates.
 
 We therefore implemented an unbiased feature selection approach.  Specifically, we used the covariates selected to be included in the CoxNet models described in the previous section.  We either included all of the non-zero/included covariates, a group of the most important covariates (judged by the coefficient value), or the prediction from the CoxNet model.  The top ten covariates from all of the models are displayed in the figure below.  As expected, inclusion of additional covariates in the disease prediction model increased overall accuracy and decreased the value of the polygenic risk score.  The polygenic risk score still contributed to nearly all disease prediction models.  Although, our alternative predictions may be overfit or underperforming, leading to an underestimation or overestimation of each score's effect, respectively.  Further investigations are needed to determine proper, unbiased model adjustments.
 
-![coef disease label](/assets/img/coef_modelcovar.png)
+<img src="/assets/img/coef_modelcovar.png" alt="coef disease label" width="800"/>
